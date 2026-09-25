@@ -61,7 +61,7 @@ section{padding-block:clamp(56px,7vw,104px)}
 .brand-logo--dark{filter:brightness(0)}
 .brand-logo--lg{height:34px}
 .nav nav{display:flex;gap:26px;font-size:14px;color:var(--ink-soft)}
-.nav nav a:hover{color:var(--red)}
+.nav nav a:hover{color:var(--red)}.nav nav a{position:relative}.nav nav a.current{color:var(--ink)}.nav nav a.current::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:var(--red)}html{scroll-padding-top:84px}@media (max-width:900px){.nav nav a.current::after{right:auto;width:24px;bottom:-4px}}
 .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--ink);padding:9px 16px;font-size:14px;font-weight:500;background:transparent;color:var(--ink);cursor:pointer;transition:background .18s,color .18s}
 .btn:hover{background:var(--ink);color:var(--paper)}
 .btn.solid{background:var(--ink);color:var(--paper)}
@@ -307,7 +307,7 @@ footer ul a:hover{opacity:.7}
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Entourage, back to top"><img src="assets/entourage-logo-white.webp" alt="Entourage" class="brand-logo brand-logo--dark"></a>
     <nav id="nav" aria-label="Main">
-      <a href="#companies">Companies</a>
+      <a href="#companies">Portfolio</a>
       <a href="#studio">Cool Inc</a>
       <a href="#giving">Giving</a>
       <a href="#about">About</a>
@@ -419,7 +419,7 @@ footer ul a:hover{opacity:.7}
   <section class="rule" id="companies">
     <div class="wrap">
       <div class="head">
-        <h2>Companies.</h2>
+        <div><span class="lab">Portfolio</span><h2 style="margin-top:12px">Companies.</h2></div>
         <p>Wholly owned businesses and strategic positions across technology, hospitality, media and gaming. The list grows; the way we work with each one does not change.</p>
       </div>
       <div class="co-bar">
@@ -641,8 +641,8 @@ footer ul a:hover{opacity:.7}
         <button type="submit">Subscribe</button>
       </form>
     </div>
-    <div><h4>Group</h4><ul><li><a href="#companies">Companies</a></li><li><a href="#studio">Cool Inc</a></li><li><a href="#what">How we work</a></li><li><a href="#evidence">The record</a></li><li><a href="#pitch">For founders</a></li></ul></div>
-    <div><h4>Company</h4><ul><li><a href="#about">About</a></li><li><a href="#giving">Giving</a></li><li><a href="#engage">Contact</a></li></ul></div>
+    <div><h4>Group</h4><ul><li><a href="#what">How we work</a></li><li><a href="#companies">Portfolio</a></li><li><a href="#studio">Cool Inc</a></li><li><a href="#evidence">The record</a></li><li><a href="#pitch">For founders</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="#giving">Giving</a></li><li><a href="#about">About</a></li><li><a href="#engage">Contact</a></li></ul></div>
     <div><h4>Connect</h4><ul><li><a href="#engage">LinkedIn</a></li><li><a href="#engage">Instagram</a></li><li><a href="#engage">X</a></li></ul></div>
   </div>
   <div class="wrap"><div class="colophon"><span>© 2026 Entourage Investment Group, LLC</span></div></div>
@@ -733,6 +733,35 @@ footer ul a:hover{opacity:.7}
 })();
 </script>
 
+<script>
+/* Header: underline the link for the section in view, and land on a linked section once the page settles */
+(() => {
+  const links = [...document.querySelectorAll('#nav a')].filter(a => (a.getAttribute('href') || '').length > 1);
+  const spy = () => {
+    const y = scrollY + 140;
+    let cur = null, best = -1;
+    links.forEach(a => {
+      let t = null; try { t = document.querySelector(a.getAttribute('href')); } catch (e) {}
+      if (!t) return;
+      const top = t.getBoundingClientRect().top + scrollY;
+      if (top <= y && top > best) { best = top; cur = a.getAttribute('href'); }
+    });
+    links.forEach(a => a.classList.toggle('current', a.getAttribute('href') === cur));
+  };
+  spy(); addEventListener('scroll', spy, {passive:true}); addEventListener('resize', spy); addEventListener('hashchange', spy);
+  // Lazy images above a linked section load after the initial jump and push it down.
+  // Keep the section anchored while the layout settles, until the visitor scrolls themselves.
+  let anchor = null; try { anchor = location.hash && document.querySelector(location.hash); } catch (e) {}
+  if (anchor) {
+    const land = () => { anchor.scrollIntoView({behavior:'instant'}); spy(); };
+    const ro = new ResizeObserver(land); ro.observe(document.body);
+    const evs = ['wheel','touchstart','keydown','pointerdown'];
+    const release = () => { ro.disconnect(); evs.forEach(e => removeEventListener(e, release)); };
+    evs.forEach(e => addEventListener(e, release, {passive:true}));
+    addEventListener('load', () => { land(); setTimeout(release, 2500); });
+  }
+})();
+</script>
 <!-- Return to theme picker -->
 <style>
 .ent-home{position:fixed;left:16px;bottom:16px;z-index:2147483000;display:inline-flex;align-items:center;gap:10px;padding:10px 16px 10px 12px;border-radius:999px;background:rgba(14,14,16,.82);color:#f4f2ee;border:1px solid rgba(255,255,255,.16);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 10px 30px -10px rgba(0,0,0,.5);font:500 13px/1 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:0;text-transform:none;text-decoration:none;cursor:pointer;transition:transform .3s cubic-bezier(.19,1,.22,1),background .2s}

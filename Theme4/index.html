@@ -548,7 +548,18 @@ footer{background:var(--black);color:#fff;padding-block:44px 28px}
     links.forEach(a => { const t = document.querySelector(a.getAttribute('href')); if (t && t.offsetTop <= scrollY + 120 && t.offsetTop > best) { best = t.offsetTop; cur = a; } });
     links.forEach(a => a.classList.toggle('current', a === cur));
   };
-  spy(); addEventListener('scroll', spy, {passive:true});
+  spy(); addEventListener('scroll', spy, {passive:true}); addEventListener('resize', spy); addEventListener('hashchange', spy);
+  // Lazy images above a linked section load after the initial jump and push it down.
+  // Keep the section anchored while the layout settles, until the visitor scrolls themselves.
+  let anchor = null; try { anchor = location.hash && document.querySelector(location.hash); } catch (e) {}
+  if (anchor) {
+    const land = () => { anchor.scrollIntoView({behavior:'instant'}); spy(); };
+    const ro = new ResizeObserver(land); ro.observe(document.body);
+    const evs = ['wheel','touchstart','keydown','pointerdown'];
+    const release = () => { ro.disconnect(); evs.forEach(e => removeEventListener(e, release)); };
+    evs.forEach(e => addEventListener(e, release, {passive:true}));
+    addEventListener('load', () => { land(); setTimeout(release, 2500); });
+  }
 
   // Portfolio filters
   const fb = document.querySelectorAll('.filters button'), cos = document.querySelectorAll('.co');

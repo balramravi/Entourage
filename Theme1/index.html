@@ -84,7 +84,8 @@
   .nav-links{display:flex;gap:30px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase}
   .nav-links a{position:relative;padding-block:4px}
   .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
-  .nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+  .nav-links a:hover::after,.nav-links a.current::after{transform:scaleX(1);transform-origin:left}
+  .mobile-menu a.current{color:var(--gold)}
   .nav-clock{font-family:var(--mono);font-size:12px;letter-spacing:.1em;font-variant-numeric:tabular-nums;color:#b9bfd0}
   .menu-btn{display:none;background:none;border:1px solid rgba(255,255,255,.5);color:#fff;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:8px 14px;border-radius:99px;cursor:pointer}
   .mobile-menu{position:fixed;inset:0;z-index:49;background:rgba(5,7,13,.96);backdrop-filter:blur(12px);display:flex;flex-direction:column;justify-content:center;gap:10px;padding-inline:var(--gutter)}
@@ -357,10 +358,10 @@
   </a>
   <nav class="nav-links" aria-label="Primary">
     <a href="#top" data-link>Home</a>
-    <a href="#leadership" data-link>About</a>
-    <a href="#portfolio" data-link>Investments</a>
+    <a href="#portfolio" data-link>Portfolio</a>
     <a href="#record" data-link>News</a>
     <a href="#giving" data-link>Giving</a>
+    <a href="#leadership" data-link>About</a>
     <a href="#contact" data-link>Contact</a>
   </nav>
   <span class="nav-clock" id="clock">LAS VEGAS --:--:--</span>
@@ -368,10 +369,10 @@
 </header>
 <div class="mobile-menu" id="mobileMenu" hidden>
   <a href="#top" data-link>Home</a>
-  <a href="#leadership" data-link>About</a>
-  <a href="#portfolio" data-link>Investments</a>
+  <a href="#portfolio" data-link>Portfolio</a>
   <a href="#record" data-link>News</a>
   <a href="#giving" data-link>Giving</a>
+  <a href="#leadership" data-link>About</a>
   <a href="#contact" data-link>Contact</a>
 </div>
 
@@ -470,11 +471,11 @@
   </section>
 
   <!-- COMPANIES -->
-  <section class="portfolio" id="portfolio" data-shape="2" data-x="0" data-s=".95" data-dim=".85" data-label="Companies">
+  <section class="portfolio" id="portfolio" data-shape="2" data-x="0" data-s=".95" data-dim=".85" data-label="Portfolio">
     <div class="pf-pin">
       <div class="pf-track" id="pfTrack">
         <div class="pf-intro">
-          <span class="eyebrow">Companies</span>
+          <span class="eyebrow">Portfolio</span>
           <h2 class="display h2">Companies.<br><span class="serif">Owned and strategic.</span></h2>
           <p class="lede">Wholly owned businesses and strategic positions across technology, hospitality, media and gaming. The list grows; the way we work with each one does not change.</p>
         </div>
@@ -686,7 +687,7 @@
         <span>A technology and lifestyle incubator in Las Vegas.</span>
       </div>
       <nav aria-label="Footer">
-        <a href="#portfolio" data-link>Companies</a><a href="#studio" data-link>Cool Inc</a><a href="#focus" data-link>How we work</a><a href="#record" data-link>The record</a><a href="#founders" data-link>For founders</a><a href="#leadership" data-link>About</a><a href="#giving" data-link>Giving</a>
+        <a href="#focus" data-link>How we work</a><a href="#portfolio" data-link>Portfolio</a><a href="#studio" data-link>Cool Inc</a><a href="#record" data-link>The record</a><a href="#giving" data-link>Giving</a><a href="#leadership" data-link>About</a><a href="#founders" data-link>For founders</a>
       </nav>
       <span>© 2026 Entourage Investment Group, LLC · Concept redesign, not the official site</span>
     </footer>
@@ -1107,6 +1108,24 @@
   relayout();
   requestAnimationFrame(load);
   requestAnimationFrame(raf);
+})();
+</script>
+<script>
+/* Header: underline the link for the section in view, and land on a linked section once the page settles */
+(() => {
+  const links = [...document.querySelectorAll('.nav-links a, .mobile-menu a')].filter(a => (a.getAttribute('href') || '').length > 1);
+  const spy = () => {
+    const y = scrollY + 140;
+    let cur = null, best = -1;
+    links.forEach(a => {
+      let t = null; try { t = document.querySelector(a.getAttribute('href')); } catch (e) {}
+      if (!t) return;
+      const top = t.getBoundingClientRect().top + scrollY;
+      if (top <= y && top > best) { best = top; cur = a.getAttribute('href'); }
+    });
+    links.forEach(a => a.classList.toggle('current', a.getAttribute('href') === cur));
+  };
+  spy(); addEventListener('scroll', spy, {passive:true}); addEventListener('resize', spy); addEventListener('hashchange', spy);
 })();
 </script>
 <!-- Return to theme picker -->
