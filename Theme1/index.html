@@ -1,0 +1,1107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Entourage Investment Group</title>
+<meta name="description" content="Concept redesign of the Entourage Investment Group site. A technology and lifestyle incubator in Las Vegas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,100..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@300..700&display=swap">
+<style>
+  :root{
+    color-scheme: dark;
+    --ink:#05070D;          /* midnight ground */
+    --ink-2:#0B1020;        /* raised surface */
+    --line:rgba(206,220,255,.12);
+    --line-2:rgba(206,220,255,.22);
+    --text:#ECEFF6;
+    --muted:#8189A0;
+    --ice:#C8DAFF;          /* particle cool */
+    --gold:#E8C27E;         /* champagne / Vegas gold */
+    --gold-deep:#B98B45;
+    --display:"Anybody","Arial Narrow",system-ui,sans-serif;
+    --serif:"Instrument Serif","Times New Roman",Georgia,serif;
+    --body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    --gutter:clamp(16px,4vw,56px);
+    --ease:cubic-bezier(.19,1,.22,1);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;background:var(--ink);color:var(--text)}
+  html.lenis,html.lenis body{height:auto}
+  .lenis.lenis-smooth{scroll-behavior:auto!important}
+  body{font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--gold);color:var(--ink)}
+  :focus-visible{outline:1px solid var(--gold);outline-offset:4px}
+  [hidden]{display:none!important}
+
+  /* ---------- WebGL stage + atmosphere ---------- */
+  #gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
+  .vignette{position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(120% 90% at 50% 45%,transparent 40%,rgba(5,7,13,.85) 100%)}
+  .grain{position:fixed;inset:-50%;z-index:60;pointer-events:none;opacity:.07;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    animation:grain 1.2s steps(6) infinite}
+  @keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-4%)}60%{transform:translate(-4%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
+
+  main{position:relative;z-index:2}
+
+  /* ---------- Type system ---------- */
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;gap:.8em;align-items:center}
+  .eyebrow::before{content:"";width:28px;height:1px;background:var(--gold)}
+  .display{font-family:var(--display);font-weight:300;font-variation-settings:"wdth" 140;text-transform:uppercase;letter-spacing:-.02em;line-height:.9;margin:0}
+  .serif{font-family:var(--serif);font-style:italic;font-weight:400;text-transform:none;letter-spacing:-.01em;color:var(--gold)}
+  .h2{font-size:clamp(2.4rem,6.4vw,6.2rem);text-wrap:balance}
+  .lede{font-size:clamp(1rem,1.2vw,1.15rem);color:var(--muted);max-width:44ch}
+
+  /* ---------- Loader ---------- */
+  .loader{position:fixed;inset:0;z-index:100;background:var(--ink);display:grid;place-items:end start;padding:var(--gutter);transition:clip-path 1.2s var(--ease)}
+  .loader{clip-path:inset(0 0 0 0)}
+  .loader.done{clip-path:inset(0 0 100% 0)}
+  .loader-count{font-family:var(--display);font-variation-settings:"wdth" 150;font-weight:200;font-size:clamp(5rem,20vw,18rem);line-height:.8;font-variant-numeric:tabular-nums}
+  .loader-meta{position:absolute;top:var(--gutter);left:var(--gutter);right:var(--gutter);display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .loader-bar{position:absolute;left:0;bottom:0;height:2px;background:var(--gold);width:0}
+
+  /* ---------- Cursor ---------- */
+  .cursor,.cursor-dot{position:fixed;top:0;left:0;z-index:90;pointer-events:none;border-radius:50%;transform:translate(-50%,-50%)}
+  .cursor{width:38px;height:38px;border:1px solid rgba(232,194,126,.6);transition:width .4s var(--ease),height .4s var(--ease),background .4s,border-color .4s}
+  .cursor-dot{width:5px;height:5px;background:var(--gold)}
+  .cursor.hover{width:84px;height:84px;background:rgba(232,194,126,.1);border-color:var(--gold)}
+  .cursor-label{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--gold);opacity:0;transition:opacity .3s}
+  .cursor.hover .cursor-label{opacity:1}
+  @media (hover:none),(pointer:coarse){.cursor,.cursor-dot{display:none}}
+
+  /* ---------- Nav ---------- */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:24px;
+    padding:calc(18px + env(safe-area-inset-top,0px)) var(--gutter) 18px;mix-blend-mode:difference}
+  .brand{display:flex;align-items:center;gap:12px;font-family:var(--display);font-variation-settings:"wdth" 150;font-weight:600;letter-spacing:.08em;font-size:15px}
+  .brand-mark{width:26px;height:26px}
+  .nav-links{display:flex;gap:30px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+  .nav-links a{position:relative;padding-block:4px}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+  .nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+  .nav-clock{font-family:var(--mono);font-size:12px;letter-spacing:.1em;font-variant-numeric:tabular-nums;color:#b9bfd0}
+  .menu-btn{display:none;background:none;border:1px solid rgba(255,255,255,.5);color:#fff;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:8px 14px;border-radius:99px;cursor:pointer}
+  .mobile-menu{position:fixed;inset:0;z-index:49;background:rgba(5,7,13,.96);backdrop-filter:blur(12px);display:flex;flex-direction:column;justify-content:center;gap:10px;padding-inline:var(--gutter)}
+  .mobile-menu a{font-family:var(--display);font-variation-settings:"wdth" 140;font-weight:300;font-size:clamp(2.4rem,11vw,4rem);text-transform:uppercase;line-height:1.05}
+  @media (max-width:860px){.nav-links,.nav-clock{display:none}.menu-btn{display:block}}
+
+  /* ---------- Progress rail ---------- */
+  .rail{position:fixed;right:var(--gutter);top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;align-items:flex-end;gap:14px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .rail-track{width:1px;height:120px;background:var(--line-2);position:relative;overflow:hidden}
+  .rail-fill{position:absolute;inset:0;background:var(--gold);transform-origin:top;transform:scaleY(0)}
+  .rail-label{writing-mode:vertical-rl;color:var(--text)}
+  @media (max-width:860px){.rail{display:none}}
+
+  /* ---------- Sections ---------- */
+  section{position:relative;padding-inline:var(--gutter)}
+
+  /* Hero */
+  .hero{min-height:100svh;display:grid;grid-template-rows:1fr auto;padding-block:120px 36px}
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap}
+  .hero-title{font-size:clamp(2.4rem,9vw,11rem);align-self:end;font-variation-settings:"wdth" 112}
+  .hero-title .line{white-space:nowrap}
+  .hero-title .line{display:block;overflow:hidden;padding-bottom:.04em}
+  .hero-title .line > span{display:inline-block;transform:translateY(110%);transition:transform 1.4s var(--ease)}
+  .is-loaded .hero-title .line > span{transform:none}
+  .hero-title .line:nth-child(2) > span{transition-delay:.08s}
+  .hero-title .line:nth-child(3) > span{transition-delay:.16s}
+  .hero-title .indent{padding-left:12vw}
+  .hero-bottom{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;align-items:end;margin-top:36px;padding-top:20px;border-top:1px solid var(--line)}
+  .coords{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--muted);font-variant-numeric:tabular-nums;line-height:1.8}
+  .coords b{color:var(--text);font-weight:500}
+  .scroll-cue{justify-self:end;display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+  .scroll-cue i{width:1px;height:46px;background:var(--line-2);position:relative;overflow:hidden}
+  .scroll-cue i::after{content:"";position:absolute;left:0;top:-50%;width:1px;height:50%;background:var(--gold);animation:drip 2s var(--ease) infinite}
+  @keyframes drip{to{top:110%}}
+  .fade-in{opacity:0;transform:translateY(16px);transition:opacity 1.2s var(--ease) .5s,transform 1.2s var(--ease) .5s}
+  .is-loaded .fade-in{opacity:1;transform:none}
+  @media (max-width:760px){.hero-bottom{grid-template-columns:1fr}.scroll-cue{justify-self:start}.hero-title .indent{padding-left:0}}
+
+  /* About */
+  .about{padding-block:22vh 14vh}
+  .about-grid{display:grid;grid-template-columns:minmax(160px,1fr) 3fr;gap:40px}
+  .scrub{font-family:var(--display);font-variation-settings:"wdth" 110;font-weight:300;font-size:clamp(1.6rem,3.5vw,3.4rem);line-height:1.12;letter-spacing:-.015em;margin:0;text-wrap:pretty}
+  .scrub .w{color:rgba(236,239,246,.14);transition:color .5s}
+  .scrub .w.lit{color:var(--text)}
+  .scrub .w.gold.lit{color:var(--gold)}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:12vh;border-top:1px solid var(--line)}
+  .stat{padding:28px 24px 8px 0;border-right:1px solid var(--line)}
+  .stat + .stat{padding-left:24px}
+  .stat:last-child{border-right:0}
+  .stat-num{font-family:var(--display);font-variation-settings:"wdth" 150;font-weight:200;font-size:clamp(3rem,6vw,5.6rem);line-height:1;font-variant-numeric:tabular-nums}
+  .stat-num sup{font-size:.4em;color:var(--gold);vertical-align:top;margin-left:.1em}
+  .stat-label{margin-top:10px;font-size:14px;color:var(--muted);max-width:22ch}
+  @media (max-width:860px){.about-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}.stat:nth-child(3){padding-left:0}.stat:nth-child(n+3){border-top:1px solid var(--line)}}
+
+  /* Focus pillars */
+  .focus{padding-block:10vh 18vh}
+  .focus-head{display:flex;justify-content:space-between;align-items:end;gap:40px;flex-wrap:wrap;margin-bottom:56px}
+  .pillars{border-top:1px solid var(--line)}
+  .pillar{display:grid;grid-template-columns:90px 1.4fr 1fr auto;gap:24px;align-items:center;padding-block:30px;border-bottom:1px solid var(--line);position:relative;overflow:hidden;cursor:default}
+  .pillar::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(232,194,126,.12),transparent 70%);transform:translateX(-101%);transition:transform .9s var(--ease)}
+  .pillar:hover::before{transform:none}
+  .pillar > *{position:relative}
+  .pillar-k{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.12em}
+  .pillar-name{font-family:var(--display);font-variation-settings:"wdth" 150;font-weight:300;font-size:clamp(2rem,5vw,4.6rem);text-transform:uppercase;line-height:1;transition:transform .8s var(--ease),color .5s}
+  .pillar:hover .pillar-name{transform:translateX(18px);color:var(--gold)}
+  .pillar-desc{color:var(--muted);font-size:15px;max-width:38ch}
+  .pillar-co{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text);text-align:right;line-height:1.9}
+  .approach{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:64px}
+  .approach-card{padding:32px;border:1px solid var(--line);border-radius:4px;background:linear-gradient(160deg,rgba(200,218,255,.05),rgba(200,218,255,0));backdrop-filter:blur(6px)}
+  .approach-card h3{font-family:var(--display);font-variation-settings:"wdth" 130;font-weight:400;font-size:1.5rem;text-transform:uppercase;margin:18px 0 10px;letter-spacing:.01em}
+  .approach-card p{margin:0;color:var(--muted)}
+  .glyph{width:40px;height:40px}
+  @media (max-width:860px){.pillar{grid-template-columns:1fr;gap:8px}.pillar-co{text-align:left}.approach{grid-template-columns:1fr}}
+
+  /* Portfolio — pinned horizontal */
+  .portfolio{padding-inline:0}
+  .pf-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;align-items:center}
+  .pf-track{display:flex;gap:28px;padding-inline:var(--gutter);will-change:transform;align-items:stretch}
+  .pf-intro{flex:0 0 min(520px,80vw);display:flex;flex-direction:column;justify-content:center;gap:28px;padding-right:4vw}
+  .pf-intro .h2{font-size:clamp(2.6rem,5.4vw,5.4rem)}
+  .card{--mx:50%;--my:50%;flex:0 0 min(430px,82vw);height:min(560px,72svh);position:relative;border-radius:6px;padding:28px;display:flex;flex-direction:column;justify-content:space-between;
+    border:1px solid var(--line-2);background:rgba(11,16,32,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);overflow:hidden;transform-style:preserve-3d;transition:transform .6s var(--ease),border-color .5s}
+  .card::before{content:"";position:absolute;inset:0;background:radial-gradient(420px circle at var(--mx) var(--my),rgba(232,194,126,.18),transparent 45%);opacity:0;transition:opacity .5s;pointer-events:none}
+  .card:hover{border-color:rgba(232,194,126,.5)}
+  .card:hover::before{opacity:1}
+  .card-top{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .chip{border:1px solid var(--line-2);border-radius:99px;padding:5px 11px;color:var(--text)}
+  .card-art{position:absolute;right:-10%;top:9%;width:min(62%,34svh);aspect-ratio:1;max-width:100%;pointer-events:none;opacity:.9}
+  .card-name{font-family:var(--display);font-variation-settings:"wdth" 120;font-weight:400;font-size:clamp(2rem,3.2vw,2.9rem);line-height:.95;text-transform:uppercase;margin:0 0 14px;letter-spacing:-.01em;text-wrap:balance}
+  .card-desc{color:var(--muted);font-size:15px;margin:0;max-width:34ch}
+  .card-foot{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+  .badge{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);line-height:1.6}
+  .badge.none{color:var(--muted)}
+  .arrow{width:42px;height:42px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;flex:0 0 auto;transition:background .4s,transform .6s var(--ease)}
+  .card:hover .arrow{background:var(--gold);color:var(--ink);transform:rotate(45deg)}
+  .pf-end{flex:0 0 min(380px,80vw);display:flex;flex-direction:column;justify-content:center;gap:20px;padding-right:var(--gutter)}
+  .pf-count{position:absolute;left:var(--gutter);bottom:calc(28px + env(safe-area-inset-bottom,0px));font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--muted);display:flex;align-items:center;gap:14px}
+  .pf-count .bar{width:160px;height:1px;background:var(--line-2);position:relative}
+  .pf-count .bar i{position:absolute;inset:0;background:var(--gold);transform-origin:left;transform:scaleX(0)}
+  @media (max-width:900px){
+    .pf-pin{position:relative;height:auto;overflow:visible;display:block;padding-block:12vh}
+    .pf-track{flex-direction:column;transform:none!important}
+    .card{flex:none;height:auto;min-height:440px;width:100%}
+    .pf-intro,.pf-end{flex:none;width:100%;padding-right:0}
+    .pf-count{display:none}
+  }
+
+  /* Giving */
+  .giving{padding-block:22vh 16vh;min-height:100vh}
+  .giving-inner{max-width:min(720px,58vw)}
+  @media (max-width:860px){.giving-inner{max-width:none}}
+  .giving .h2 .serif{display:block;font-size:1.08em;line-height:1}
+  .causes{margin-top:56px;display:grid;gap:0;border-top:1px solid var(--line)}
+  .cause{display:grid;grid-template-columns:1fr auto;gap:16px;padding-block:24px;border-bottom:1px solid var(--line)}
+  .cause h3{margin:0 0 4px;font-family:var(--display);font-variation-settings:"wdth" 125;font-weight:400;font-size:1.45rem;text-transform:uppercase;letter-spacing:.01em}
+  .cause p{margin:0;color:var(--muted);font-size:15px;max-width:48ch}
+  .cause span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;padding-top:6px}
+
+  /* Marquee */
+  .marquee{padding:0;border-block:1px solid var(--line);overflow:hidden;background:rgba(5,7,13,.5);backdrop-filter:blur(4px)}
+  .marquee-track{display:flex;width:max-content;animation:marq 38s linear infinite}
+  .marquee:hover .marquee-track{animation-play-state:paused}
+  .marquee-item{display:flex;align-items:center;gap:28px;padding:30px 28px;white-space:nowrap;font-family:var(--display);font-variation-settings:"wdth" 130;font-weight:300;font-size:clamp(1.4rem,2.6vw,2.4rem);text-transform:uppercase}
+  .marquee-item em{font-family:var(--serif);text-transform:none;color:var(--gold);font-size:1.1em}
+  .marquee-item .star{color:var(--gold);font-size:.7em}
+  @keyframes marq{to{transform:translateX(-50%)}}
+
+  /* Leadership */
+  .leaders{padding-block:18vh 14vh}
+  .leaders-head{display:flex;justify-content:space-between;align-items:end;gap:32px;flex-wrap:wrap;margin-bottom:64px}
+  .leader-grid{display:grid;grid-template-columns:1fr;gap:28px;max-width:760px;margin-left:auto}
+  .leader{border:1px solid var(--line);border-radius:6px;padding:32px;background:rgba(11,16,32,.5);backdrop-filter:blur(10px);display:grid;gap:22px;align-content:start}
+  .leader-top{display:flex;align-items:center;gap:20px}
+  .mono-orb{width:76px;height:76px;border-radius:50%;flex:0 0 auto;position:relative;display:grid;place-items:center;font-family:var(--display);font-variation-settings:"wdth" 150;font-weight:500;font-size:18px;letter-spacing:.05em}
+  .mono-orb::before{content:"";position:absolute;inset:0;border-radius:50%;padding:1px;background:conic-gradient(from var(--a,0deg),var(--gold),transparent 40%,var(--ice) 70%,var(--gold));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 8s linear infinite}
+  @property --a{syntax:"<angle>";initial-value:0deg;inherits:false}
+  @keyframes spin{to{--a:360deg}}
+  .leader h3{margin:0;font-family:var(--display);font-variation-settings:"wdth" 135;font-weight:400;font-size:clamp(1.6rem,2.6vw,2.3rem);text-transform:uppercase;line-height:1}
+  .leader .role{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-top:8px}
+  .leader p{margin:0;color:var(--muted);font-size:15px}
+  .leader ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:14px}
+  .leader li{display:grid;grid-template-columns:14px 1fr;gap:10px}
+  .leader li::before{content:"";width:6px;height:6px;margin-top:9px;border:1px solid var(--gold);transform:rotate(45deg)}
+  @media (max-width:860px){.leader-grid{grid-template-columns:1fr}}
+
+  /* Contact */
+  .contact{min-height:100vh;display:grid;align-content:end;padding-block:18vh 0}
+  .contact-title{font-size:clamp(3rem,11vw,12rem)}
+  .contact-row{display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;margin-top:48px}
+  .magnet{display:inline-flex;align-items:center;gap:16px;padding:22px 34px;border-radius:99px;background:var(--gold);color:var(--ink);font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;transition:transform .5s var(--ease),background .3s;will-change:transform}
+  .magnet:hover{background:#F2D6A2}
+  .cities{display:flex;gap:48px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);line-height:1.9}
+  .cities b{display:block;color:var(--text);font-weight:500}
+  footer{margin-top:14vh;padding-block:28px calc(28px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  footer nav{display:flex;gap:22px;flex-wrap:wrap}
+  footer a:hover{color:var(--gold)}
+
+  /* ---------- Content additions ---------- */
+  .brand-logo{height:28px;width:auto;display:block}
+  .hero-intro{display:grid;gap:22px;justify-items:start;max-width:46ch}
+  .hero-ctas{display:flex;gap:10px;flex-wrap:wrap}
+  .pill-btn{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:99px;border:1px solid var(--line-2);font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--text);transition:background .3s,border-color .3s,color .3s}
+  .pill-btn:hover{border-color:var(--gold);color:var(--gold)}
+  .pill-btn.solid{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+  .pill-btn.solid:hover{background:#F2D6A2;color:var(--ink)}
+
+  .faces{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:12vh}
+  .face{position:relative;aspect-ratio:4/5;border-radius:6px;overflow:hidden;border:1px solid var(--line-2);display:flex;flex-direction:column;justify-content:flex-end;padding:22px;isolation:isolate}
+  .face img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;filter:saturate(.75) brightness(.7);transform:scale(1.04);transition:transform 1.4s var(--ease),filter .8s}
+  .face::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,transparent 40%,rgba(5,7,13,.9))}
+  .face:hover img{transform:scale(1);filter:saturate(1) brightness(.85)}
+  .face-k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+  .face-t{font-family:var(--display);font-variation-settings:"wdth" 130;font-weight:300;font-size:clamp(1.6rem,2.4vw,2.2rem);text-transform:uppercase;line-height:1;margin-top:8px}
+  @media (max-width:760px){.faces{grid-template-columns:1fr}.face{aspect-ratio:16/10}}
+
+  .card-logo{position:relative;flex:1;margin:22px 0;min-height:120px;border-radius:4px;background:#F1EEE6;display:grid;place-items:center;padding:12%}
+  .card-logo.dark{background:#141A2A;border:1px solid var(--line)}
+  .card-logo img{max-width:100%;max-height:150px;width:auto;height:auto;object-fit:contain;transition:transform .8s var(--ease)}
+  .card:hover .card-logo img{transform:scale(1.05)}
+
+  .studio{padding-block:16vh}
+  .studio-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px);align-items:center}
+  .studio-img{margin:0;position:relative;border-radius:6px;overflow:hidden;border:1px solid var(--line-2);aspect-ratio:4/5}
+  .studio-img > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85)}
+  .studio-badge{position:absolute;left:20px;top:20px;width:104px;padding:10px 12px;border-radius:4px;background:#F1EEE6}
+  .studio-badge img{width:100%;display:block}
+  .services{margin-top:36px;border-top:1px solid var(--line)}
+  .services div{display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);font-size:16px}
+  .services small{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;align-self:center}
+  @media (max-width:860px){.studio-grid{grid-template-columns:1fr}.studio-img{aspect-ratio:16/10}}
+
+  .record{padding-block:12vh 16vh}
+  .timeline{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+  .timeline li{display:grid;grid-template-columns:minmax(120px,1fr) 3fr;gap:32px;padding-block:32px;border-bottom:1px solid var(--line)}
+  .tl-year{font-family:var(--display);font-variation-settings:"wdth" 150;font-weight:200;font-size:clamp(2.6rem,5vw,4.6rem);line-height:.9;color:var(--gold)}
+  .timeline h3{margin:0 0 8px;font-family:var(--display);font-variation-settings:"wdth" 120;font-weight:400;font-size:clamp(1.2rem,1.8vw,1.6rem);text-transform:uppercase;letter-spacing:.01em}
+  .timeline p{margin:0;color:var(--muted);max-width:62ch}
+  .tl-link{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(232,194,126,.4)}
+  @media (max-width:760px){.timeline li{grid-template-columns:1fr;gap:10px}}
+
+  .giving-photo{margin:40px 0 0;position:relative;border-radius:6px;overflow:hidden;border:1px solid var(--line-2)}
+  .giving-photo img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;filter:saturate(.85)}
+  .giving-photo figcaption{position:absolute;inset:auto 0 0 0;padding:28px 26px 22px;background:linear-gradient(180deg,transparent,rgba(5,7,13,.92) 45%);font-family:var(--serif);font-style:italic;font-size:clamp(1.15rem,1.7vw,1.5rem);line-height:1.3;color:var(--text)}
+  .giving-photo figcaption span{display:block;margin-top:10px;font-family:var(--mono);font-style:normal;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+  .cause{grid-template-columns:120px 1fr auto;align-items:center}
+  .cause-logo{background:#F1EEE6;border-radius:4px;height:64px;display:grid;place-items:center;padding:10px 12px}
+  .cause-logo img{max-width:100%;max-height:40px;width:auto}
+  .cause .cause-fig{font-family:var(--display);font-variation-settings:"wdth" 150;font-weight:200;font-size:clamp(2rem,3.4vw,3rem);line-height:1;color:var(--gold);letter-spacing:0;padding:0;text-transform:none}
+  .cause-fig small{font-size:.4em;margin-left:4px;color:var(--muted)}
+  @media (max-width:560px){.cause{grid-template-columns:1fr}.cause-logo{width:170px}}
+
+  .leader-photo{width:84px;height:104px;border-radius:4px;object-fit:cover;flex:0 0 auto;border:1px solid var(--line-2)}
+  .leader li{grid-template-columns:14px 1fr auto;align-items:start}
+  .leader li small{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right;padding-top:3px}
+  @media (max-width:560px){.leader li{grid-template-columns:14px 1fr}.leader li small{grid-column:2;text-align:left;padding-top:0}}
+
+  .founders{padding-block:12vh 8vh}
+  .fsteps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+  .fs-n{font-family:var(--display);font-variation-settings:"wdth" 150;font-weight:200;font-size:3.2rem;line-height:1;color:var(--gold)}
+  @media (max-width:860px){.fsteps{grid-template-columns:1fr}}
+
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px);margin-top:56px;align-items:start}
+  .contact-grid .cities{margin-top:36px;flex-direction:column;gap:22px}
+  .contact-grid .cities a:hover{color:var(--gold)}
+  .pitch-form{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:28px;border:1px solid var(--line-2);border-radius:6px;background:rgba(11,16,32,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  .pitch-form label{display:grid;gap:8px}
+  .pitch-form label.full{grid-column:1/-1}
+  .pitch-form label span{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .pitch-form input,.pitch-form textarea{font:inherit;color:var(--text);background:transparent;border:0;border-bottom:1px solid var(--line-2);padding:10px 0;border-radius:0;resize:vertical}
+  .pitch-form input:focus,.pitch-form textarea:focus{outline:none;border-color:var(--gold)}
+  .pitch-form .magnet{justify-self:start;border:0;cursor:pointer;padding:18px 28px;white-space:nowrap}
+  .sent{grid-column:1/-1;margin:0;font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--gold)}
+  .foot-brand{display:flex;flex-direction:column;gap:10px;text-transform:none;letter-spacing:.02em;font-family:var(--body);font-size:13px}
+  .foot-brand img{height:30px;width:auto;align-self:flex-start}
+  @media (min-width:861px){.contact-grid,.leader-grid{padding-right:44px}}
+  @media (max-width:860px){.contact-grid{grid-template-columns:1fr}}
+  @media (max-width:520px){.pitch-form{grid-template-columns:1fr}}
+
+  /* Reveal */
+  .js [data-reveal]{opacity:0;transform:translateY(46px);transition:opacity 1.2s var(--ease),transform 1.2s var(--ease)}
+  .js [data-reveal].in{opacity:1;transform:none}
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .js [data-reveal]{opacity:1;transform:none}
+    .hero-title .line > span{transform:none}
+    .fade-in{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- Loader -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-meta"><span>Entourage Investment Group</span><span>Las Vegas · Since 2009</span></div>
+  <div class="loader-count" id="loaderCount">000</div>
+  <div class="loader-bar" id="loaderBar"></div>
+</div>
+
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="vignette"></div>
+<div class="grain"></div>
+<div class="cursor" id="cursor"><span class="cursor-label" id="cursorLabel">View</span></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<header class="nav">
+  <a href="#top" class="brand" data-link aria-label="Entourage Investment Group, back to top">
+    <img class="brand-logo" src="assets/Entourage-logo-white.webp" alt="Entourage Investment Group">
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#top" data-link>Home</a>
+    <a href="#leadership" data-link>About</a>
+    <a href="#portfolio" data-link>Investments</a>
+    <a href="#record" data-link>News</a>
+    <a href="#giving" data-link>Giving</a>
+    <a href="#contact" data-link>Contact</a>
+  </nav>
+  <span class="nav-clock" id="clock">LAS VEGAS --:--:--</span>
+  <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu">Menu</button>
+</header>
+<div class="mobile-menu" id="mobileMenu" hidden>
+  <a href="#top" data-link>Home</a>
+  <a href="#leadership" data-link>About</a>
+  <a href="#portfolio" data-link>Investments</a>
+  <a href="#record" data-link>News</a>
+  <a href="#giving" data-link>Giving</a>
+  <a href="#contact" data-link>Contact</a>
+</div>
+
+<aside class="rail" aria-hidden="true">
+  <span id="railIdx">01 / 10</span>
+  <div class="rail-track"><div class="rail-fill" id="railFill"></div></div>
+  <span class="rail-label" id="railLabel">Index</span>
+</aside>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" data-shape="0" data-x="0" data-s="1" data-dim="1" data-label="Index">
+    <div class="hero-top fade-in">
+      <span class="eyebrow">The incubator · Las Vegas · Since 2009</span>
+      <div class="hero-intro">
+        <p class="lede" style="margin:0">We put money, expertise and a build team behind companies people use every day. Some we acquire outright. Some we back early. All of them get operators in the room, not just a cheque.</p>
+        <div class="hero-ctas">
+          <a class="pill-btn solid" href="#portfolio" data-link data-cursor="Go">See the companies</a>
+          <a class="pill-btn" href="#founders" data-link data-cursor="Go">Pitch us</a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h1 class="display hero-title" aria-label="Entourage is a technology and lifestyle incubator.">
+        <span class="line"><span>Technology</span></span>
+        <span class="line indent"><span>and lifestyle</span></span>
+        <span class="line"><span class="serif">incubator.</span></span>
+      </h1>
+      <div class="hero-bottom fade-in">
+        <div class="coords"><b>HQ</b> 36.1699° N / 115.1398° W<br>Las Vegas, Nevada</div>
+        <div class="coords">Entourage Investment Group, LLC<br>Owned and strategic · Board level, hands on</div>
+        <a href="#about" class="scroll-cue" data-link><i></i>Scroll to explore</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT THE GROUP -->
+  <section class="about" id="about" data-shape="1" data-x="0" data-s="1" data-dim=".55" data-label="The group">
+    <div class="about-grid">
+      <span class="eyebrow" data-reveal>Three sides of one group</span>
+      <p class="scrub" id="scrub">We invest in, acquire and build companies in technology and lifestyle. Cool Inc, our own product, design and engineering team, does the building. And we back the non-profits that deliver [real services to children and families in need.]</p>
+    </div>
+    <div class="faces">
+      <a class="face" href="#portfolio" data-link data-reveal data-cursor="View">
+        <img src="assets/incubator.jpg" alt="A team in conversation around a table in Las Vegas" loading="lazy">
+        <span class="face-k">01 · Incubator</span>
+        <span class="face-t">What we are</span>
+      </a>
+      <a class="face" href="#studio" data-link data-reveal data-cursor="View">
+        <img src="assets/tech.jpg" alt="Two designers reviewing an app layout on screens at night" loading="lazy">
+        <span class="face-k">02 · Technology</span>
+        <span class="face-t">What we build</span>
+      </a>
+      <a class="face" href="#giving" data-link data-reveal data-cursor="View">
+        <img src="assets/giving.jpg" alt="Parents and children doing crafts together at long tables" loading="lazy">
+        <span class="face-k">03 · Giving</span>
+        <span class="face-t">What we back</span>
+      </a>
+    </div>
+    <div class="stats">
+      <div class="stat" data-reveal><div class="stat-num" data-count="2009">2009</div><div class="stat-label">Entourage Investment Group is founded in Las Vegas</div></div>
+      <div class="stat" data-reveal><div class="stat-num"><span data-count="25">25</span><sup>+</sup></div><div class="stat-label">Years of gaming, hospitality and technology relationships</div></div>
+      <div class="stat" data-reveal><div class="stat-num"><span data-count="287">287</span><sup>%</sup></div><div class="stat-label">Growth behind House Advantage's Inc. 5000 ranking, 2019</div></div>
+      <div class="stat" data-reveal><div class="stat-num"><span data-count="18">18</span><sup>yrs</sup></div><div class="stat-label">From founding House Advantage to the 2022 exit</div></div>
+    </div>
+  </section>
+
+  <!-- HOW WE WORK -->
+  <section class="focus" id="focus" data-shape="1" data-x="0" data-s="1.05" data-dim=".35" data-label="How we work">
+    <div class="focus-head">
+      <div>
+        <span class="eyebrow" data-reveal>How we work</span>
+        <h2 class="display h2" data-reveal style="margin-top:22px">Four ways we work<br><span class="serif">with a company.</span></h2>
+      </div>
+      <p class="lede" data-reveal>Most groups stop at the investment. We keep going, because the team that built House Advantage knows what a company needs in the two years after the money lands.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar" data-reveal><span class="pillar-k">01</span><span class="pillar-name">Invest</span><span class="pillar-desc">Outright acquisitions and strategic equity in companies with technology worth owning.</span><span class="pillar-co">Acquire<br>Back founders</span></div>
+      <div class="pillar" data-reveal><span class="pillar-k">02</span><span class="pillar-name">Guide</span><span class="pillar-desc">Board seats and hands-on direction across marketing, technology and loyalty.</span><span class="pillar-co">Board level<br>Hands on</span></div>
+      <div class="pillar" data-reveal><span class="pillar-k">03</span><span class="pillar-name">Build</span><span class="pillar-desc">Cool Inc, our own product, design and engineering team, goes to work on the product.</span><span class="pillar-co">Build with<br>Cool Inc</span></div>
+      <div class="pillar" data-reveal><span class="pillar-k">04</span><span class="pillar-name">Connect</span><span class="pillar-desc">Twenty-five years of gaming, hospitality and technology relationships, opened up.</span><span class="pillar-co">Gaming · Hospitality<br>Technology</span></div>
+    </div>
+    <div class="approach">
+      <div class="approach-card" data-reveal>
+        <svg class="glyph" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="18" stroke="#E8C27E"/><path d="M20 2v36M2 20h36" stroke="#E8C27E" stroke-opacity=".4"/><circle cx="20" cy="20" r="6" fill="#E8C27E"/></svg>
+        <h3>Owned and strategic</h3>
+        <p>Some we acquire outright. Some we back early. Wholly owned businesses and strategic positions sit side by side.</p>
+      </div>
+      <div class="approach-card" data-reveal>
+        <svg class="glyph" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="3" y="3" width="34" height="34" stroke="#C8DAFF" stroke-opacity=".6"/><rect x="11" y="11" width="18" height="18" stroke="#E8C27E" transform="rotate(45 20 20)"/></svg>
+        <h3>Board level, hands on</h3>
+        <p>All of them get operators in the room, not just a cheque.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPANIES -->
+  <section class="portfolio" id="portfolio" data-shape="2" data-x="0" data-s=".95" data-dim=".85" data-label="Companies">
+    <div class="pf-pin">
+      <div class="pf-track" id="pfTrack">
+        <div class="pf-intro">
+          <span class="eyebrow">Companies</span>
+          <h2 class="display h2">Companies.<br><span class="serif">Owned and strategic.</span></h2>
+          <p class="lede">Wholly owned businesses and strategic positions across technology, hospitality, media and gaming. The list grows; the way we work with each one does not change.</p>
+        </div>
+
+        <article class="card" data-cursor="">
+          <div class="card-top"><span>P · 01</span><span class="chip">Software and design</span></div>
+          <div class="card-logo"><img src="assets/logo-coolinc.png" alt="Cool Incubator logo"></div>
+          <div>
+            <h3 class="card-name">Cool Incubator</h3>
+            <p class="card-desc">The group's build arm. Product development, design and technology consulting.</p>
+            <div class="card-foot"><span class="badge">Wholly owned</span><span class="arrow" aria-hidden="true">↗</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-cursor="">
+          <div class="card-top"><span>P · 02</span><span class="chip">Cybersecurity</span></div>
+          <div class="card-logo"><img src="assets/logo-axiom.png" alt="Axiom Cyber Solutions logo"></div>
+          <div>
+            <h3 class="card-name">Axiom Cyber Solutions</h3>
+            <p class="card-desc">Cybersecurity for small and mid-sized businesses, acquired by the group in 2019.</p>
+            <div class="card-foot"><span class="badge">Acquired 2019</span><span class="arrow" aria-hidden="true">↗</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-cursor="">
+          <div class="card-top"><span>P · 03</span><span class="chip">Media and streaming</span></div>
+          <div class="card-logo"><img src="assets/logo-tv4.png" alt="TV4 Entertainment logo"></div>
+          <div>
+            <h3 class="card-name">TV4 Entertainment</h3>
+            <p class="card-desc">Streaming channels and original content reaching viewers worldwide.</p>
+            <div class="card-foot"><span class="badge">Board seat<br>Fast Company Most Innovative, 2019</span><span class="arrow" aria-hidden="true">↗</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-cursor="">
+          <div class="card-top"><span>P · 04</span><span class="chip">Craft beverage</span></div>
+          <div class="card-logo dark"><img src="assets/logo-smbw.png" alt="Santa Monica Brew Works logo"></div>
+          <div>
+            <h3 class="card-name">Santa Monica Brew Works</h3>
+            <p class="card-desc">An award-winning craft brewery with a Southern California twist.</p>
+            <div class="card-foot"><span class="badge">Strategic</span><span class="arrow" aria-hidden="true">↗</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-cursor="">
+          <div class="card-top"><span>P · 05</span><span class="chip">Gaming and rewards</span></div>
+          <div class="card-logo"><img src="assets/logo-signalzero.png" alt="Signal Zero logo"></div>
+          <div>
+            <h3 class="card-name">Signal Zero</h3>
+            <p class="card-desc">A patent-pending rewards platform built for the video gaming market.</p>
+            <div class="card-foot"><span class="badge">Strategic</span><span class="arrow" aria-hidden="true">↗</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-cursor="">
+          <div class="card-top"><span>P · 06</span><span class="chip">Media and licensing</span></div>
+          <div class="card-logo"><img src="assets/logo-prod310.png" alt="3.1.0. Productions logo"></div>
+          <div>
+            <h3 class="card-name">3.1.0. Productions</h3>
+            <p class="card-desc">Modern media across film, television, games and music, plus brand licensing.</p>
+            <div class="card-foot"><span class="badge">Wholly owned</span><span class="arrow" aria-hidden="true">↗</span></div>
+          </div>
+        </article>
+
+        <div class="pf-end">
+          <span class="eyebrow">Next company</span>
+          <p class="lede" style="color:var(--text)">Building something people use every day? Tell us about it.</p>
+          <a class="magnet" href="#founders" data-link data-cursor="Go" style="align-self:flex-start">Pitch us ↗</a>
+        </div>
+      </div>
+      <div class="pf-count"><span id="pfIdx">01</span><span class="bar"><i id="pfBar"></i></span><span id="pfTotal">06</span></div>
+    </div>
+  </section>
+
+  <!-- COOL INC -->
+  <section class="studio" id="studio" data-shape="2" data-x="0" data-s=".8" data-dim=".3" data-label="Cool Inc">
+    <div class="studio-grid">
+      <figure class="studio-img" data-reveal>
+        <img src="assets/tech.jpg" alt="Two designers reviewing an app layout on screens at night" loading="lazy">
+        <span class="studio-badge"><img src="assets/logo-coolinc.png" alt="Cool Inc logo"></span>
+      </figure>
+      <div class="studio-copy">
+        <span class="eyebrow" data-reveal>Cool Incubator</span>
+        <h2 class="display h2" data-reveal style="margin-top:22px">The studio<br><span class="serif">inside the group.</span></h2>
+        <p class="lede" data-reveal style="margin-top:24px;max-width:52ch">Cool Inc is how Entourage builds. A product, design and engineering team that works on the companies we own, takes on consulting for partners, and gets an idea from a conversation to something people can use.</p>
+        <p class="lede" data-reveal style="margin-top:14px;max-width:52ch;color:var(--text)">We don't just fund it. We build it. It is the same discipline that built HALo.</p>
+        <div class="services" data-reveal>
+          <div><span>Product development</span><small>Idea to launch</small></div>
+          <div><span>Design</span><small>UI, UX, design systems</small></div>
+          <div><span>Web and mobile builds</span><small>Engineering</small></div>
+          <div><span>Technology consulting</span><small>Advisory</small></div>
+        </div>
+        <a class="pill-btn solid" href="#contact" data-link data-cursor="Go" data-reveal style="margin-top:32px">Work with Cool Inc</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE RECORD -->
+  <section class="record" id="record" data-shape="2.5" data-x="0" data-s=".9" data-dim=".3" data-label="The record">
+    <div class="focus-head">
+      <div>
+        <span class="eyebrow" data-reveal>The record</span>
+        <h2 class="display h2" data-reveal style="margin-top:22px">The record.<br><span class="serif">Sourced, not claimed.</span></h2>
+      </div>
+      <p class="lede" data-reveal>What the companies in and around the group have done. Figures come from the awarding organisations, not from us.</p>
+    </div>
+    <ol class="timeline">
+      <li data-reveal><span class="tl-year">2004</span><div><h3>House Advantage is founded</h3><p>Jon starts a loyalty and marketing technology company in Las Vegas, later building teams there and in India.</p></div></li>
+      <li data-reveal><span class="tl-year">2009</span><div><h3>Entourage Investment Group is founded</h3><p>A private group to own and back technology and lifestyle businesses, with operators rather than passive money.</p></div></li>
+      <li data-reveal><span class="tl-year">2019</span><div><h3>Independently ranked for growth</h3><p>House Advantage at No. 1453 on the Inc. 5000 and 347th on Deloitte's Technology Fast 500, after 287 percent growth. TV4 Entertainment named to Fast Company's Most Innovative Companies the same year.</p></div></li>
+      <li data-reveal><span class="tl-year">2022</span><div><h3>Light &amp; Wonder acquires the House Advantage assets</h3><p>HALo and around twenty of the team move to the gaming industry leader. Eighteen years from founding to exit.</p><a class="tl-link" href="https://explore.lnw.com/newsroom/light-wonder-advances-its-cross-platform-vision-with-the-acquisition-of-house-advantage-assets/" target="_blank" rel="noopener" data-cursor="Open">Read the announcement ↗</a></div></li>
+      <li data-reveal><span class="tl-year">Now</span><div><h3>Building the next ones</h3><p>Cool Inc gives the group its own product, design and engineering team, so the next company gets built as well as backed.</p></div></li>
+    </ol>
+  </section>
+
+  <!-- GIVING -->
+  <section class="giving" id="giving" data-shape="3" data-x=".42" data-s=".82" data-dim="1" data-label="Giving">
+    <div class="giving-inner">
+      <span class="eyebrow" data-reveal>Make-A-Wish &amp; Olive Crest</span>
+      <h2 class="display h2" data-reveal style="margin-top:22px">Giving is <span class="serif">not a footnote.</span></h2>
+      <p class="lede" data-reveal style="margin-top:28px">Entourage supports non-profits that deliver real services to children and families in need. The drives run every year, and the involvement goes past writing a cheque.</p>
+      <figure class="giving-photo" data-reveal>
+        <img src="assets/giving.jpg" alt="Parents and children doing crafts together at long tables" loading="lazy">
+        <figcaption>"They are the unsung heroes in the Las Vegas community, helping so many local young people on the path to success."<span>Jon Wolfe, on Olive Crest</span></figcaption>
+      </figure>
+      <div class="causes">
+        <div class="cause" data-reveal><span class="cause-logo"><img src="assets/logo-makeawish.png" alt="Make-A-Wish Southern Nevada logo"></span><div><h3>Make-A-Wish Southern Nevada</h3><p>Granting wishes for children with critical illnesses. Jon chairs the board.</p></div><span class="cause-fig">15<small>yrs</small></span></div>
+        <div class="cause" data-reveal><span class="cause-logo"><img src="assets/logo-olivecrest.png" alt="Olive Crest logo"></span><div><h3>Olive Crest, every day</h3><p>Children and families served daily across California, Nevada and the Pacific Northwest.</p></div><span class="cause-fig">3,500</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECOGNITION -->
+  <div class="marquee" aria-label="Recognition">
+    <div class="marquee-track">
+      <div class="marquee-item">Inc. 5000 No. 1453 <em>House Advantage, 2019</em><span class="star">✦</span></div>
+      <div class="marquee-item">Deloitte Technology Fast 500 <em>347th, House Advantage</em><span class="star">✦</span></div>
+      <div class="marquee-item">Fast Company Most Innovative <em>TV4 Entertainment, 2019</em><span class="star">✦</span></div>
+      <div class="marquee-item">Forbes Technology Council <em>Jon C. Wolfe</em><span class="star">✦</span></div>
+      <div class="marquee-item" aria-hidden="true">Inc. 5000 No. 1453 <em>House Advantage, 2019</em><span class="star">✦</span></div>
+      <div class="marquee-item" aria-hidden="true">Deloitte Technology Fast 500 <em>347th, House Advantage</em><span class="star">✦</span></div>
+      <div class="marquee-item" aria-hidden="true">Fast Company Most Innovative <em>TV4 Entertainment, 2019</em><span class="star">✦</span></div>
+      <div class="marquee-item" aria-hidden="true">Forbes Technology Council <em>Jon C. Wolfe</em><span class="star">✦</span></div>
+    </div>
+  </div>
+
+  <!-- ABOUT JON -->
+  <section class="leaders" id="leadership" data-shape="3.5" data-x="-.45" data-s=".7" data-dim=".45" data-label="About">
+    <div class="leaders-head">
+      <div>
+        <span class="eyebrow" data-reveal>About</span>
+        <h2 class="display h2" data-reveal style="margin-top:22px">Operators, <span class="serif">not passive money.</span></h2>
+      </div>
+      <p class="lede" data-reveal>Jon founded Entourage in 2009 after more than twenty-five years running technology and operations inside the gaming industry.</p>
+    </div>
+    <div class="leader-grid">
+      <article class="leader" data-reveal>
+        <div class="leader-top"><img class="leader-photo" src="assets/jon.jpg" alt="Portrait of Jon C. Wolfe"><div><h3>Jon C. Wolfe</h3><div class="role">Founder, Chairman &amp; CEO</div></div></div>
+        <p>Jon founded Entourage in 2009 after more than twenty-five years running technology and operations inside the gaming industry. He built House Advantage, the Las Vegas loyalty platform behind HALo, into an international business, and Light &amp; Wonder acquired its assets in 2022.</p>
+        <p>Today he invests in and builds technology and lifestyle companies, takes board seats where he can be useful, and gives the same attention to the charities the group supports.</p>
+        <ul>
+          <li><span>SVP and CIO, Horseshoe Gaming Group and Resorts International</span><small>Gaming</small></li>
+          <li><span>EVP Operations and CIO, Binion Enterprises</span><small>Gaming</small></li>
+          <li><span>Founder and CEO, House Advantage</span><small>2004 · assets acquired by L&amp;W, 2022</small></li>
+          <li><span>Founder, Chairman and CEO, Entourage Investment Group</span><small>2009 · present</small></li>
+          <li><span>Member, Forbes Technology Council</span><small>2019 · present</small></li>
+          <li><span>Chairman of the Board, Make-A-Wish Southern Nevada</span><small>Present</small></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- FOR FOUNDERS -->
+  <section class="founders" id="founders" data-shape="3.8" data-x="0" data-s=".9" data-dim=".3" data-label="For founders">
+    <span class="eyebrow" data-reveal>For founders</span>
+    <h2 class="display h2" data-reveal style="margin-top:22px">What happens <span class="serif">after you pitch.</span></h2>
+    <div class="fsteps">
+      <div class="approach-card" data-reveal><span class="fs-n">01</span><h3>Send us a paragraph</h3><p>No deck needed to start. What you are building, who it is for, and where you are stuck.</p></div>
+      <div class="approach-card" data-reveal><span class="fs-n">02</span><h3>You hear back within a week</h3><p>Either way. A no comes with the reason, so you are not left guessing.</p></div>
+      <div class="approach-card" data-reveal><span class="fs-n">03</span><h3>If it fits, you meet Jon</h3><p>The conversation covers what you need beyond money: the build, the board, the introductions.</p></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact" data-shape="4" data-x="0" data-s="1.1" data-dim="1" data-label="Contact">
+    <span class="eyebrow" data-reveal>Contact</span>
+    <h2 class="display contact-title" data-reveal style="margin-top:28px">Tell us what<br>you are <span class="serif">building.</span></h2>
+    <div class="contact-grid">
+      <div data-reveal>
+        <p class="lede" style="color:var(--text)">If your company fits the way we invest and build, we would like to hear about it. Founders get a reply from a person, not a form letter.</p>
+        <div class="cities">
+          <div><b>Entourage Investment Group, LLC</b>10100 W. Charleston Blvd., Suite 130<br>Las Vegas, NV 89135</div>
+          <div><b><a href="tel:+13103623514">(310) 362-3514</a></b><a href="mailto:info@entouragegrp.com">info@entouragegrp.com</a></div>
+          <div><b id="clock2">--:--</b>Las Vegas time</div>
+        </div>
+      </div>
+      <form class="pitch-form" id="pitchForm" data-reveal novalidate>
+        <label><span>Name</span><input name="name" autocomplete="name"></label>
+        <label><span>Email</span><input name="email" type="email" autocomplete="email"></label>
+        <label class="full"><span>Company or product</span><input name="company"></label>
+        <label class="full"><span>What are you building?</span><textarea name="message" rows="4"></textarea></label>
+        <button class="magnet" type="submit" data-magnet data-cursor="Send">Send message <span aria-hidden="true">↗</span></button>
+        <p class="sent" id="sent" role="status" hidden>Thanks. This is a concept page, so nothing was sent.</p>
+      </form>
+    </div>
+    <footer>
+      <div class="foot-brand">
+        <img src="assets/Entourage-logo-white.webp" alt="Entourage Investment Group">
+        <span>A technology and lifestyle incubator in Las Vegas.</span>
+      </div>
+      <nav aria-label="Footer">
+        <a href="#portfolio" data-link>Companies</a><a href="#studio" data-link>Cool Inc</a><a href="#focus" data-link>How we work</a><a href="#record" data-link>The record</a><a href="#founders" data-link>For founders</a><a href="#leadership" data-link>About</a><a href="#giving" data-link>Giving</a>
+      </nav>
+      <span>© 2026 Entourage Investment Group, LLC · Concept redesign, not the official site</span>
+    </footer>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(() => {
+  document.documentElement.classList.add('js');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch = matchMedia('(hover:none),(pointer:coarse)').matches;
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+
+  /* ---------------- Smooth scroll ---------------- */
+  let lenis = null;
+  if (!reduce && typeof Lenis !== 'undefined') {
+    lenis = new Lenis({ lerp: 0.085, smoothWheel: true });
+  }
+  document.querySelectorAll('[data-link]').forEach(a => a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (!id || !id.startsWith('#')) return;
+    const el = id === '#top' ? document.body : document.querySelector(id);
+    if (!el) return;
+    e.preventDefault();
+    closeMenu();
+    if (lenis) lenis.scrollTo(id === '#top' ? 0 : el, { duration: 1.6 });
+    else (id === '#top' ? window.scrollTo({ top: 0 }) : el.scrollIntoView());
+  }));
+
+  /* ---------------- Mobile menu ---------------- */
+  const menuBtn = document.getElementById('menuBtn'), menu = document.getElementById('mobileMenu');
+  function closeMenu(){ menu.hidden = true; menuBtn.setAttribute('aria-expanded','false'); menuBtn.textContent = 'Menu'; lenis && lenis.start(); }
+  menuBtn.addEventListener('click', () => {
+    const open = menu.hidden;
+    menu.hidden = !open; menuBtn.setAttribute('aria-expanded', String(open)); menuBtn.textContent = open ? 'Close' : 'Menu';
+    if (lenis) open ? lenis.stop() : lenis.start();
+  });
+
+  /* ---------------- Clock (Las Vegas, Pacific time) ---------------- */
+  const fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+  const fmt2 = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', hour: '2-digit', minute: '2-digit', hour12: false });
+  const tick = () => { const d = new Date(); clock.textContent = 'LAS VEGAS ' + fmt.format(d) + ' PT'; clock2.textContent = fmt2.format(d); };
+  tick(); setInterval(tick, 1000);
+
+  /* ---------------- About: split words for scroll scrub ---------------- */
+  const scrub = document.getElementById('scrub');
+  {
+    const raw = scrub.textContent.trim();
+    const parts = raw.split(/(\[[^\]]+\])/);
+    scrub.textContent = '';
+    parts.forEach(p => {
+      const gold = p.startsWith('[');
+      const text = gold ? p.slice(1, -1) : p;
+      text.split(/\s+/).filter(Boolean).forEach(w => {
+        const s = document.createElement('span');
+        s.className = 'w' + (gold ? ' gold' : '');
+        s.textContent = w;
+        scrub.append(s, ' ');
+      });
+    });
+  }
+  const words = [...scrub.querySelectorAll('.w')];
+
+  /* ---------------- Reveal + counters ---------------- */
+  const io = new IntersectionObserver(entries => entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    en.target.classList.add('in');
+    en.target.querySelectorAll('[data-count]').forEach(countUp);
+    io.unobserve(en.target);
+  }), { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+  function countUp(el){
+    if (reduce) return;
+    const end = +el.dataset.count, pad = +(el.dataset.pad || 0);
+    const start = end > 1000 ? end - 60 : 0, t0 = performance.now(), dur = 1600;
+    const step = now => {
+      const k = clamp((now - t0) / dur, 0, 1), e = 1 - Math.pow(1 - k, 4);
+      el.textContent = String(Math.round(start + (end - start) * e)).padStart(pad, '0');
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  /* ---------------- Contact form (concept only, nothing is sent) ---------------- */
+  document.getElementById('pitchForm').addEventListener('submit', e => { e.preventDefault(); document.getElementById('sent').hidden = false; });
+
+  /* ---------------- Cursor + magnetic + card glow ---------------- */
+  const cursor = document.getElementById('cursor'), dot = document.getElementById('cursorDot'), cLabel = document.getElementById('cursorLabel');
+  const mouse = { x: innerWidth / 2, y: innerHeight / 2, nx: 0, ny: 0 };
+  const cpos = { x: mouse.x, y: mouse.y };
+  addEventListener('pointermove', e => {
+    mouse.x = e.clientX; mouse.y = e.clientY;
+    mouse.nx = (e.clientX / innerWidth) * 2 - 1; mouse.ny = -(e.clientY / innerHeight) * 2 + 1;
+    dot.style.transform = `translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`;
+  });
+  document.querySelectorAll('a, button, [data-cursor]').forEach(el => {
+    el.addEventListener('pointerenter', () => { cursor.classList.add('hover'); cLabel.textContent = el.dataset.cursor || ''; });
+    el.addEventListener('pointerleave', () => cursor.classList.remove('hover'));
+  });
+  document.querySelectorAll('[data-magnet], .pf-end .magnet').forEach(el => {
+    el.addEventListener('pointermove', e => {
+      const r = el.getBoundingClientRect();
+      el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.3}px,${(e.clientY - r.top - r.height / 2) * 0.4}px)`;
+    });
+    el.addEventListener('pointerleave', () => el.style.transform = '');
+  });
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('pointermove', e => {
+      const r = card.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      card.style.setProperty('--mx', px * 100 + '%'); card.style.setProperty('--my', py * 100 + '%');
+      if (!reduce) card.style.transform = `perspective(900px) rotateY(${(px - .5) * 8}deg) rotateX(${(.5 - py) * 8}deg)`;
+    });
+    card.addEventListener('pointerleave', () => card.style.transform = '');
+  });
+
+  /* ---------------- Portfolio horizontal pin ---------------- */
+  const pfSection = document.getElementById('portfolio'), pfTrack = document.getElementById('pfTrack');
+  const pfBar = document.getElementById('pfBar'), pfIdx = document.getElementById('pfIdx');
+  const pfCards = pfTrack.querySelectorAll('.card').length;
+  document.getElementById('pfTotal').textContent = String(pfCards).padStart(2, '0');
+  let pfDistance = 0, pfHorizontal = false;
+  function layoutPortfolio(){
+    pfHorizontal = innerWidth > 900;
+    if (pfHorizontal) {
+      pfDistance = Math.max(0, pfTrack.scrollWidth - innerWidth);
+      pfSection.style.height = (innerHeight + pfDistance) + 'px';
+    } else { pfDistance = 0; pfSection.style.height = ''; pfTrack.style.transform = ''; }
+  }
+
+  /* ---------------- Scroll keyframes for the particle field ---------------- */
+  const sections = [...document.querySelectorAll('section[data-shape]')];
+  let keys = [];
+  function buildKeys(){
+    const vh = innerHeight, sy = scrollY, mobile = innerWidth < 860;
+    keys = [];
+    sections.forEach(s => {
+      const r = s.getBoundingClientRect(), top = r.top + sy, h = r.height;
+      const k = { shape: +s.dataset.shape, x: mobile ? 0 : +s.dataset.x, s: (+s.dataset.s) * (mobile ? .72 : 1), dim: +s.dataset.dim * (mobile && s.dataset.x !== '0' ? .5 : 1) };
+      const a = Math.max(0, top - vh * .55), b = Math.max(a, top + h - vh * 1.05);
+      keys.push({ y: a, ...k }, { y: b, ...k });
+    });
+  }
+  function sample(y){
+    if (y <= keys[0].y) return keys[0];
+    for (let i = 0; i < keys.length - 1; i++) {
+      const A = keys[i], B = keys[i + 1];
+      if (y >= A.y && y <= B.y) {
+        const t = B.y === A.y ? 1 : (y - A.y) / (B.y - A.y), e = t * t * (3 - 2 * t);
+        return { shape: lerp(A.shape, B.shape, e), x: lerp(A.x, B.x, e), s: lerp(A.s, B.s, e), dim: lerp(A.dim, B.dim, e) };
+      }
+    }
+    return keys[keys.length - 1];
+  }
+
+  /* ---------------- Rail ---------------- */
+  const railFill = document.getElementById('railFill'), railIdx = document.getElementById('railIdx'), railLabel = document.getElementById('railLabel');
+  let lastRail = -1;
+
+  function onScroll(){
+    const y = scrollY, vh = innerHeight;
+    // portfolio track
+    if (pfHorizontal) {
+      const r = pfSection.getBoundingClientRect();
+      const p = clamp(-r.top / Math.max(1, pfSection.offsetHeight - vh), 0, 1);
+      pfTrack.style.transform = `translate3d(${-p * pfDistance}px,0,0)`;
+      pfBar.style.transform = `scaleX(${p})`;
+      pfIdx.textContent = String(clamp(Math.round(p * (pfCards - 1)) + 1, 1, pfCards)).padStart(2, '0');
+    }
+    // about scrub
+    const ar = scrub.getBoundingClientRect();
+    const ap = clamp((vh * .85 - ar.top) / (ar.height + vh * .35), 0, 1);
+    const lit = Math.floor(ap * words.length * 1.05);
+    words.forEach((w, i) => w.classList.toggle('lit', i < lit));
+    // rail
+    const docP = y / Math.max(1, document.documentElement.scrollHeight - vh);
+    railFill.style.transform = `scaleY(${docP})`;
+    let cur = 0;
+    sections.forEach((s, i) => { if (s.getBoundingClientRect().top < vh * .5) cur = i; });
+    if (cur !== lastRail) { lastRail = cur; railIdx.textContent = String(cur + 1).padStart(2, '0') + ' / ' + String(sections.length).padStart(2, '0'); railLabel.textContent = sections[cur].dataset.label; }
+  }
+
+  /* ---------------- WebGL particle field ---------------- */
+  const canvas = document.getElementById('gl');
+  let gl3 = null;
+  if (typeof THREE !== 'undefined') gl3 = initGL();
+
+  function initGL(){
+    let renderer;
+    try { renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: 'high-performance' }); }
+    catch (e) { return null; }
+    const DPR = Math.min(devicePixelRatio || 1, 2);
+    renderer.setPixelRatio(DPR);
+    renderer.setClearColor(0x05070d, 1);
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 100);
+    camera.position.set(0, 0, 10);
+
+    const N = innerWidth < 760 ? 9000 : 16000;
+    const rnd = Math.random;
+    const A = new Float32Array(N * 3), B = new Float32Array(N * 3), C = new Float32Array(N * 3), D = new Float32Array(N * 3), E = new Float32Array(N * 3), R = new Float32Array(N);
+    const set = (arr, i, x, y, z) => { arr[i * 3] = x; arr[i * 3 + 1] = y; arr[i * 3 + 2] = z; };
+    const rotX = (v, a) => { const c = Math.cos(a), s = Math.sin(a); return [v[0], v[1] * c - v[2] * s, v[1] * s + v[2] * c]; };
+    const rotZ = (v, a) => { const c = Math.cos(a), s = Math.sin(a); return [v[0] * c - v[1] * s, v[0] * s + v[1] * c, v[2]]; };
+    const gauss = () => (rnd() + rnd() + rnd() - 1.5) / 1.5;
+
+    // constellation nodes (6 portfolio companies)
+    const nodes = [[-3.8, 1.2, 0.2], [-2.0, -1.8, 1.2], [-0.4, 1.9, -1.0], [1.2, -1.2, 0.6], [2.8, 1.4, -0.4], [4.0, -1.0, 0.3]];
+    const edges = [[0,1],[0,2],[1,2],[1,3],[2,3],[2,4],[3,4],[3,5],[4,5],[0,3]];
+
+    for (let i = 0; i < N; i++) {
+      const r = rnd(); R[i] = r;
+      // A — core sphere with orbital ring
+      if (i < N * 0.7) {
+        const k = i / (N * 0.7), phi = Math.acos(1 - 2 * k), th = Math.PI * (1 + Math.sqrt(5)) * i;
+        const rad = 2.25 * (1 + (rnd() - .5) * .05);
+        set(A, i, rad * Math.sin(phi) * Math.cos(th), rad * Math.cos(phi), rad * Math.sin(phi) * Math.sin(th));
+      } else {
+        const a = rnd() * Math.PI * 2, rad = 3.0 + Math.pow(rnd(), 2) * 1.6;
+        let v = [Math.cos(a) * rad, (rnd() - .5) * .06, Math.sin(a) * rad];
+        v = rotZ(rotX(v, 1.25), .35);
+        set(A, i, v[0], v[1], v[2]);
+      }
+      // B — undulating terrain / market horizon
+      {
+        const x = (rnd() - .5) * 18, z = (rnd() - .5) * 9;
+        const y = .55 * Math.sin(x * .7 + z * .3) + .35 * Math.cos(z * 1.2 - x * .25) + .15 * Math.sin(x * 2.1);
+        const v = rotX([x, y - .4, z], .42);
+        set(B, i, v[0], v[1] - .6, v[2]);
+      }
+      // C — portfolio constellation: clusters + links + dust
+      if (i < N * .55) {
+        const n = nodes[i % nodes.length], rr = .62 * Math.cbrt(rnd());
+        const th = rnd() * Math.PI * 2, ph = Math.acos(2 * rnd() - 1);
+        set(C, i, n[0] + rr * Math.sin(ph) * Math.cos(th), n[1] + rr * Math.cos(ph), n[2] + rr * Math.sin(ph) * Math.sin(th));
+      } else if (i < N * .9) {
+        const e = edges[i % edges.length], t = rnd(), p = nodes[e[0]], q = nodes[e[1]], j = .035;
+        set(C, i, p[0] + (q[0] - p[0]) * t + gauss() * j, p[1] + (q[1] - p[1]) * t + gauss() * j, p[2] + (q[2] - p[2]) * t + gauss() * j);
+      } else {
+        set(C, i, (rnd() - .5) * 16, (rnd() - .5) * 9, (rnd() - .5) * 6 - 2);
+      }
+      // D — heart (giving)
+      {
+        const t = rnd() * Math.PI * 2, s = Math.pow(rnd(), .28);
+        const hx = 16 * Math.pow(Math.sin(t), 3);
+        const hy = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+        const k = .15 * s, depth = (1 - s * .55) * 1.4;
+        set(D, i, hx * k, hy * k + .5, (rnd() - .5) * depth);
+      }
+      // E — spiral galaxy (future)
+      {
+        const arms = 3, arm = i % arms, rad = Math.pow(rnd(), .75) * 5.4 + .15;
+        const ang = arm / arms * Math.PI * 2 + rad * 1.05 + gauss() * (.35 / (rad * .6 + .4));
+        let v = [Math.cos(ang) * rad, gauss() * .22 * (1 - rad / 6), Math.sin(ang) * rad];
+        v = rotX(v, .95);
+        set(E, i, v[0], v[1], v[2]);
+      }
+    }
+
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(A, 3));
+    geo.setAttribute('aA', new THREE.BufferAttribute(A, 3));
+    geo.setAttribute('aB', new THREE.BufferAttribute(B, 3));
+    geo.setAttribute('aC', new THREE.BufferAttribute(C, 3));
+    geo.setAttribute('aD', new THREE.BufferAttribute(D, 3));
+    geo.setAttribute('aE', new THREE.BufferAttribute(E, 3));
+    geo.setAttribute('aRand', new THREE.BufferAttribute(R, 1));
+    geo.boundingSphere = new THREE.Sphere(new THREE.Vector3(), 20);
+
+    const uniforms = {
+      uTime: { value: 0 }, uMorph: { value: 0 }, uSize: { value: innerWidth < 760 ? 30 : 34 },
+      uPR: { value: DPR }, uMouse: { value: new THREE.Vector3(99, 99, 0) }, uMouseK: { value: 0 },
+      uWarm: { value: 0 }, uDim: { value: 1 }, uIntro: { value: 0 }
+    };
+    const mat = new THREE.ShaderMaterial({
+      uniforms, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+      vertexShader: `
+        uniform float uTime, uMorph, uSize, uPR, uMouseK, uIntro;
+        uniform vec3 uMouse;
+        attribute vec3 aA, aB, aC, aD, aE;
+        attribute float aRand;
+        varying float vRand; varying float vDepth; varying float vGlow;
+        float stage(float t, float k){ return smoothstep(0.0, 1.0, clamp((t - k) * 1.6 - aRand * .6, 0.0, 1.0)); }
+        void main(){
+          vec3 p = aA;
+          p = mix(p, aB, stage(uMorph, 0.0));
+          p = mix(p, aC, stage(uMorph, 1.0));
+          p = mix(p, aD, stage(uMorph, 2.0));
+          p = mix(p, aE, stage(uMorph, 3.0));
+          float tr = sin(3.14159 * fract(uMorph));
+          float n = aRand * 6.2831;
+          p += vec3(sin(uTime * .7 + n + p.y * 1.3), cos(uTime * .55 + n * 1.3 + p.x * 1.1), sin(uTime * .45 + n * .7 + p.z)) * (.025 + .45 * tr * tr);
+          // intro: explode in from a wide shell
+          p = mix(normalize(p + vec3(.001)) * (14.0 + aRand * 10.0), p, smoothstep(0.0, 1.0, clamp(uIntro * 1.4 - aRand * .4, 0.0, 1.0)));
+          vec4 w = modelMatrix * vec4(p, 1.0);
+          vec2 d = w.xy - uMouse.xy;
+          float dist = length(d);
+          float push = exp(-dist * dist * 1.1) * uMouseK;
+          w.xy += d / (dist + .0001) * push * .75;
+          w.z += push * .6;
+          vGlow = push;
+          vec4 mv = viewMatrix * w;
+          gl_Position = projectionMatrix * mv;
+          gl_PointSize = uSize * (.45 + aRand * .9) * uPR / -mv.z;
+          vRand = aRand; vDepth = -mv.z;
+        }`,
+      fragmentShader: `
+        uniform float uWarm, uDim;
+        varying float vRand; varying float vDepth; varying float vGlow;
+        void main(){
+          float d = length(gl_PointCoord - .5);
+          if (d > .5) discard;
+          float a = pow(smoothstep(.5, 0.0, d), 1.7);
+          vec3 ice = vec3(.76, .84, 1.0), gold = vec3(.95, .76, .46), rose = vec3(1.0, .62, .5);
+          vec3 col = mix(ice, gold, smoothstep(.62, .98, vRand));
+          col = mix(col, mix(gold, rose, vRand), uWarm * .85);
+          col += vGlow * vec3(.4, .3, .15);
+          float fog = smoothstep(18.0, 6.0, vDepth);
+          gl_FragColor = vec4(col, a * .85 * uDim * fog);
+        }`
+    });
+    const points = new THREE.Points(geo, mat);
+    scene.add(points);
+
+    // faint star dust for depth
+    const dustN = 900, dust = new Float32Array(dustN * 3);
+    for (let i = 0; i < dustN; i++) { dust[i * 3] = (rnd() - .5) * 40; dust[i * 3 + 1] = (rnd() - .5) * 26; dust[i * 3 + 2] = -rnd() * 20 - 4; }
+    const dg = new THREE.BufferGeometry(); dg.setAttribute('position', new THREE.BufferAttribute(dust, 3));
+    const dustPts = new THREE.Points(dg, new THREE.PointsMaterial({ color: 0x8b96b8, size: .045, transparent: true, opacity: .55, depthWrite: false }));
+    scene.add(dustPts);
+
+    function resize(){
+      renderer.setSize(innerWidth, innerHeight, false);
+      camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+    }
+    resize();
+
+    const halfW = () => Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z * camera.aspect;
+    const tmp = new THREE.Vector3(), dir = new THREE.Vector3();
+    const st = { morph: 0, x: 0, s: 1, dim: 1, mk: 0, vel: 0 };
+    let lastY = scrollY, rotY = 0;
+
+    return {
+      resize,
+      intro(){ st.introT = performance.now(); },
+      frame(t){
+        uniforms.uTime.value = t * .001;
+        if (st.introT) uniforms.uIntro.value = clamp((performance.now() - st.introT) / 2600, 0, 1);
+        const target = keys.length ? sample(scrollY) : { shape: 0, x: 0, s: 1, dim: 1 };
+        st.morph = lerp(st.morph, target.shape, .055);
+        st.x = lerp(st.x, target.x, .05);
+        st.s = lerp(st.s, target.s, .05);
+        st.dim = lerp(st.dim, target.dim, .05);
+        uniforms.uMorph.value = st.morph;
+        uniforms.uDim.value = st.dim;
+        uniforms.uWarm.value = clamp(1 - Math.abs(st.morph - 3) * 1.2, 0, 1);
+
+        const v = scrollY - lastY; lastY = scrollY;
+        st.vel = lerp(st.vel, clamp(v * .0009, -.03, .03), .1);
+        rotY += (reduce ? .0005 : .0018) + st.vel;
+        points.rotation.y = rotY + mouse.nx * .15;
+        points.rotation.x = -mouse.ny * .08 + Math.sin(t * .0002) * .05;
+        points.position.x = st.x * halfW();
+        points.scale.setScalar(st.s);
+        dustPts.rotation.y = rotY * .15;
+        dustPts.position.y = scrollY * .0012;
+
+        camera.position.x = lerp(camera.position.x, mouse.nx * .35, .04);
+        camera.position.y = lerp(camera.position.y, mouse.ny * .25, .04);
+        camera.lookAt(0, 0, 0);
+
+        // mouse → world on z=0 plane
+        tmp.set(mouse.nx, mouse.ny, .5).unproject(camera);
+        dir.copy(tmp).sub(camera.position).normalize();
+        const dist = -camera.position.z / dir.z;
+        uniforms.uMouse.value.copy(camera.position).addScaledVector(dir, dist);
+        st.mk = lerp(st.mk, isTouch || reduce ? 0 : 1, .05);
+        uniforms.uMouseK.value = st.mk;
+
+        renderer.render(scene, camera);
+      }
+    };
+  }
+
+  /* ---------------- Loop ---------------- */
+  function raf(t){
+    lenis && lenis.raf(t);
+    cpos.x = lerp(cpos.x, mouse.x, .18); cpos.y = lerp(cpos.y, mouse.y, .18);
+    cursor.style.transform = `translate(${cpos.x}px,${cpos.y}px) translate(-50%,-50%)`;
+    onScroll();
+    gl3 && gl3.frame(t);
+    requestAnimationFrame(raf);
+  }
+
+  function relayout(){ layoutPortfolio(); buildKeys(); gl3 && gl3.resize(); onScroll(); }
+  let rT; addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(relayout, 120); });
+
+  /* ---------------- Loader ---------------- */
+  const loader = document.getElementById('loader'), lc = document.getElementById('loaderCount'), lb = document.getElementById('loaderBar');
+  const t0 = performance.now(), LOAD = reduce ? 200 : 1700;
+  let fontsReady = false;
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { fontsReady = true; relayout(); });
+  function load(now){
+    const k = clamp((now - t0) / LOAD, 0, fontsReady ? 1 : .92), e = 1 - Math.pow(1 - k, 3);
+    lc.textContent = String(Math.round(e * 100)).padStart(3, '0');
+    lb.style.width = e * 100 + '%';
+    if (k < 1) return requestAnimationFrame(load);
+    loader.classList.add('done');
+    document.body.classList.add('is-loaded');
+    gl3 && gl3.intro();
+    setTimeout(() => loader.remove(), 1400);
+  }
+  relayout();
+  requestAnimationFrame(load);
+  requestAnimationFrame(raf);
+})();
+</script>
+</body>
+</html>

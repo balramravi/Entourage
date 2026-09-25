@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Entourage Investment Group</title>
+<meta name="description" content="Entourage is a technology and lifestyle incubator in Las Vegas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --red:#D22F37;
+  --red-dk:#B8252D;
+  --black:#0E0E0E;
+  --black-2:#161616;
+  --paper:#F8F7F4;
+  --mist:#E7E8EC;
+  --white:#FFFFFF;
+  --ink:#111111;
+  --ink-2:#5E5E5E;
+  --ink-3:#8A8A8A;
+  --line:#E2E0DB;
+  --line-dk:#2A2A2A;
+  --on-dk:#F3F3F3;
+  --on-dk-2:#8E8E8E;
+  --max:1328px;
+  --gut:clamp(16px,4vw,56px);
+  --sans:"Geist",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,p,figure,blockquote,ol,ul{margin:0}
+ol,ul{padding:0;list-style:none}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
+.kicker.mute{color:var(--on-dk-2)}
+.h2{font-size:clamp(28px,3.1vw,42px);font-weight:500;letter-spacing:-.035em;line-height:1.12;margin-top:14px}
+.sec{padding-block:clamp(64px,8vw,104px)}
+.dark{background:var(--black);color:var(--on-dk)}
+.mist{background:var(--mist)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 18px;border-radius:2px;font:500 14px var(--sans);letter-spacing:-.01em;border:1px solid transparent;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.btn .ar{width:14px;height:14px;border-radius:2px;background:rgba(255,255,255,.85);color:var(--red);display:grid;place-items:center;font-size:10px;line-height:1;transition:transform .2s}
+.btn:hover .ar{transform:translate(2px,-2px)}
+.btn.red{background:var(--red);color:#fff}
+.btn.red:hover{background:var(--red-dk)}
+.btn.ghost{border-color:#3A3A3A;color:#fff;background:rgba(0,0,0,.35)}
+.btn.ghost:hover{border-color:#fff}
+.btn.ghost .ar{background:#fff;color:var(--black)}
+.btn.black{background:var(--black);color:#fff}
+.btn.black:hover{background:#2a2a2a}
+.btn.black .ar{background:#fff;color:var(--black)}
+
+/* NAV */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(14,14,14,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-color:var(--line-dk)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:24px}
+.nav .logo img{height:24px;width:auto}
+.nav nav{display:flex;gap:34px;font-size:13.5px;color:#D6D6D6}
+.nav nav a{position:relative;padding-block:4px;transition:color .2s}
+.nav nav a:hover,.nav nav a.current{color:#fff}
+.nav nav a.current::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--red)}
+.nav .btn{padding:10px 16px;font-size:13.5px}
+.menu{display:none;background:none;border:1px solid #444;color:#fff;border-radius:2px;padding:9px 14px;font:500 13px var(--sans);cursor:pointer}
+@media (max-width:900px){
+  .nav nav{display:none}
+  .nav nav.open{display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:var(--black);padding:20px var(--gut) 26px;gap:18px;font-size:17px;border-bottom:1px solid var(--line-dk)}
+  .menu{display:inline-flex}
+  .nav .right .btn{display:none}
+}
+.nav .right{display:flex;gap:10px;align-items:center}
+
+/* HERO */
+.hero{position:relative;background:var(--black);color:#fff;min-height:min(800px,100svh);display:flex;align-items:center;overflow:hidden;padding-block:120px 72px}
+.hero-img{position:absolute;inset:0 0 0 38%;background:url("assets/incubator.jpg") center/cover no-repeat;filter:brightness(.55) saturate(.9)}
+.hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--black) 0%,var(--black) 36%,rgba(14,14,14,.75) 52%,rgba(14,14,14,.2) 80%,rgba(14,14,14,.35) 100%)}
+.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:30%;z-index:1;background:linear-gradient(180deg,transparent,var(--black))}
+.hero .wrap{position:relative;z-index:2;width:100%}
+.hero .kicker{color:#9A9A9A}
+.hero h1{font-size:clamp(40px,5.4vw,76px);font-weight:500;letter-spacing:-.045em;line-height:1.04;margin-top:26px;max-width:12ch}
+.hero p{margin-top:26px;max-width:52ch;color:#A9A9A9;font-size:clamp(15px,1.15vw,17px)}
+.hero .ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:32px}
+@media (max-width:760px){.hero-img{inset:0}.hero::before{background:linear-gradient(180deg,rgba(14,14,14,.6),rgba(14,14,14,.92) 60%)}}
+
+/* BAND */
+.band{background:var(--red);color:#fff}
+.band .wrap{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.6fr;gap:24px;align-items:center;padding-block:40px}
+.band h2{font-size:clamp(20px,1.7vw,24px);font-weight:500;letter-spacing:-.02em;line-height:1.25;max-width:15ch}
+.band b{display:block;font-size:clamp(24px,2vw,28px);font-weight:400;letter-spacing:-.02em;line-height:1.1}
+.band b.m{font-family:var(--mono);font-size:clamp(18px,1.6vw,23px);letter-spacing:0}
+.band span{font-size:12.5px;color:#FAD9DA}
+@media (max-width:860px){.band .wrap{grid-template-columns:1fr 1fr}.band h2{grid-column:1/-1}}
+
+/* WHAT WE DO */
+.rows{margin-top:44px;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:90px minmax(0,1.3fr) minmax(0,2fr);gap:24px;padding-block:22px 26px;border-bottom:1px solid var(--line);align-items:baseline;transition:background .25s}
+.row:hover{background:rgba(210,47,55,.03)}
+.row .n{font-family:var(--mono);font-size:10.5px;color:var(--red)}
+.row h3{font-size:clamp(19px,1.6vw,23px);font-weight:500;letter-spacing:-.025em}
+.row p{color:var(--ink-2);font-size:14.5px}
+.dark .rows{border-color:var(--line-dk)}
+.dark .row{border-color:var(--line-dk)}
+.dark .row:hover{background:rgba(255,255,255,.02)}
+.dark .row h3{font-size:clamp(17px,1.3vw,19px)}
+.dark .row p{color:var(--on-dk-2)}
+@media (max-width:760px){.row{grid-template-columns:40px 1fr}.row p{grid-column:2}}
+
+/* PORTFOLIO */
+.pf-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+.pf-head .sub{margin-top:18px;color:#7A7A7A;max-width:52ch;font-size:15px}
+.filters{display:flex;gap:8px}
+.filters button{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:9px 14px;border-radius:99px;border:1px solid #3A3A3A;background:transparent;color:#9A9A9A;cursor:pointer;transition:all .2s}
+.filters button:hover{color:#fff;border-color:#777}
+.filters button[aria-pressed="true"]{background:#fff;border-color:#fff;color:var(--black)}
+.pf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+.co{background:var(--paper);color:var(--ink);border:1px solid var(--paper);border-radius:2px;padding:18px 18px 16px;display:flex;flex-direction:column;min-height:246px;transition:transform .3s,box-shadow .3s}
+.co:hover{transform:translateY(-3px);box-shadow:0 18px 40px -20px rgba(0,0,0,.7)}
+.co .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+.co .lg{flex:1;display:flex;align-items:center;padding-block:12px}
+.co .lg img{max-height:88px;max-width:62%;width:auto;object-fit:contain}
+.co .ft{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.co .go{width:16px;height:16px;border-radius:2px;background:#8FA7C7;color:#fff;display:grid;place-items:center;font-size:10px}
+.co.dk{background:var(--black);border-color:#2E2E2E;color:#fff}
+.co.dk .ft{color:#D0D0D0}
+.co[hidden]{display:none}
+@media (max-width:960px){.pf-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.pf-grid{grid-template-columns:1fr}}
+
+/* RECORD */
+.sec-sub{margin-top:20px;color:var(--ink-2);max-width:54ch;font-size:15px}
+.tl{margin-top:48px;border-top:1px solid var(--line)}
+.tl li{display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:24px 28px;border-bottom:1px solid var(--line)}
+.tl li.now{border-top:1px solid var(--red);margin-top:-1px}
+.tl .y{font-family:var(--mono);font-size:11px;color:var(--ink-3);padding-top:5px}
+.tl li.now .y{color:var(--red)}
+.tl h3{font-size:17px;font-weight:500;letter-spacing:-.02em}
+.tl p{margin-top:10px;color:var(--ink-2);font-size:14.5px;max-width:84ch}
+.tl a{display:inline-block;margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--red);border-bottom:1px solid rgba(210,47,55,.35)}
+@media (max-width:640px){.tl li{grid-template-columns:1fr;gap:6px}}
+
+/* COOL INC */
+.ci{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,56px);align-items:start}
+.ci p{margin-top:20px;color:var(--on-dk-2);max-width:48ch;font-size:15px}
+.ci .btn{margin-top:26px;padding:10px 14px}
+.ci figure{border-radius:4px;overflow:hidden;border:1px solid var(--line-dk);position:relative;aspect-ratio:4/3}
+.ci figure > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ci figure .badge{position:absolute;left:16px;top:16px;width:96px;background:var(--paper);border-radius:2px;padding:8px 10px}
+.svc{margin-top:40px;border-top:1px solid var(--line-dk)}
+.svc div{display:flex;justify-content:space-between;gap:16px;padding-block:20px 22px;border-bottom:1px solid var(--line-dk);font-size:15px}
+.svc span{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--on-dk-2);text-align:right}
+@media (max-width:860px){.ci{grid-template-columns:1fr}}
+
+/* IMPACT */
+.imp{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
+.imp .lgbox{border:1px solid var(--line);border-radius:4px;background:var(--paper);height:clamp(140px,11vw,160px);display:grid;place-items:center}
+.imp .lgbox img{max-height:34%;width:auto}
+.imp .fig{margin-top:22px;font-size:clamp(40px,3.4vw,48px);font-weight:400;letter-spacing:-.04em;line-height:1}
+.imp .fig small{font-size:15px;color:var(--red);margin-left:6px;letter-spacing:0;font-weight:500}
+.imp h3{margin-top:14px;font-size:clamp(18px,1.5vw,21px);font-weight:500;letter-spacing:-.025em}
+.imp p{margin-top:10px;color:var(--ink-2);font-size:14px;max-width:44ch}
+.quote{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,40px);align-items:center;margin-top:48px}
+.quote blockquote{font-size:clamp(20px,1.75vw,25px);font-weight:500;letter-spacing:-.025em;line-height:1.3}
+.quote cite{display:block;margin-top:10px;font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.quote figure img{border-radius:4px;border:1px solid var(--line);width:100%;aspect-ratio:4/3;object-fit:cover}
+.quote figcaption{margin-top:10px;font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+@media (max-width:760px){.imp,.quote{grid-template-columns:1fr}}
+
+/* ABOUT */
+.about{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,4vw,56px);align-items:start}
+.about .photo{border-radius:4px;overflow:hidden;aspect-ratio:4/5}
+.about .photo img{width:100%;height:100%;object-fit:cover}
+.about h2{font-size:clamp(30px,3vw,40px)}
+.about .bio{margin-top:18px;color:var(--ink-2);font-size:clamp(15px,1.2vw,17px);max-width:52ch;line-height:1.55}
+.about .btn{margin-top:26px;padding:10px 14px}
+.about .tr{margin-top:34px}
+.about .tr h3{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);font-weight:400;padding-bottom:6px;border-bottom:1px solid #D2D3D8}
+.about .tr li{display:flex;justify-content:space-between;gap:20px;padding-block:10px 12px;border-bottom:1px solid #D2D3D8;font-size:13.5px}
+.about .tr li span{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap;text-align:right}
+.about .more{display:none;margin-top:14px;color:var(--ink-2);font-size:15px;max-width:52ch}
+.about .more.open{display:block}
+@media (max-width:860px){.about{grid-template-columns:1fr}.about .photo{max-width:360px}}
+@media (max-width:520px){.about .tr li{flex-direction:column;gap:2px}.about .tr li span{text-align:left}}
+
+/* NEWSROOM */
+.news{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:40px}
+.nc{border:1px solid var(--line);background:var(--paper);padding:18px 16px 18px;display:flex;flex-direction:column;gap:12px;min-height:250px;transition:border-color .2s,transform .3s}
+.nc:hover{border-color:#C9C6BF;transform:translateY(-3px)}
+.nc .kicker{font-size:10px}
+.nc h3{font-size:clamp(17px,1.35vw,19px);font-weight:500;letter-spacing:-.025em;line-height:1.2;margin-top:10px}
+.nc p{color:var(--ink-2);font-size:12.5px;line-height:1.5}
+.nc .rs{margin-top:auto;font-family:var(--mono);font-size:10.5px;color:var(--red);display:inline-flex;gap:6px;align-items:center}
+.nc.lead{background:var(--black);border-color:var(--black);color:#fff}
+.nc.lead p{color:#8E8E8E}
+.nc.lead .rs{color:#fff}
+@media (max-width:1000px){.news{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.news{grid-template-columns:1fr}.nc{min-height:0}}
+
+/* CONTACT */
+.ct{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,6fr);gap:clamp(28px,4vw,56px)}
+.ct h2{font-size:clamp(26px,2.4vw,32px);max-width:15ch}
+.ct .lede{margin-top:16px;color:var(--ink-2);font-size:15.5px;max-width:38ch}
+.ct address{margin-top:18px;font-style:normal;font-size:13.5px;line-height:1.55}
+.ct address a:hover{color:var(--red)}
+form.pitch{display:grid;gap:14px}
+form.pitch label{display:grid;gap:8px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+form.pitch input,form.pitch textarea{font:15px var(--sans);color:var(--ink);background:#F3F2EE;border:1px solid var(--line);border-radius:2px;padding:10px 12px;width:100%;transition:border-color .2s,background .2s}
+form.pitch input:focus,form.pitch textarea:focus{outline:none;border-color:var(--red);background:#fff}
+form.pitch textarea{min-height:92px;resize:vertical}
+form.pitch .btn{justify-self:start;margin-top:4px}
+.sent{font-family:var(--mono);font-size:11.5px;color:var(--red)}
+@media (max-width:860px){.ct{grid-template-columns:1fr}}
+
+/* FOOTER */
+footer{background:var(--black);color:#fff;padding-block:44px 28px}
+.ft-top{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;align-items:flex-start}
+.ft-top .logo img{height:30px;width:auto}
+.ft-top h3{font-size:clamp(17px,1.4vw,19px);font-weight:500;letter-spacing:-.02em}
+.sign{display:flex;gap:6px;margin-top:10px}
+.sign input{font:14px var(--sans);color:#fff;background:transparent;border:1px solid #444;border-radius:2px;padding:10px 12px;width:min(260px,58vw)}
+.sign input::placeholder{color:#777}
+.sign input:focus{outline:none;border-color:#aaa}
+.ft-bot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:44px;font-family:var(--mono);font-size:10.5px;color:#8A8A8A}
+.ft-bot a:hover{color:#fff}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Entourage, back to top"><img src="assets/Entourage-logo-white.webp" alt="Entourage Investment Group"></a>
+    <nav id="menu" aria-label="Main">
+      <a href="#portfolio">Portfolio</a>
+      <a href="#cool-inc">Cool Inc</a>
+      <a href="#impact">Impact</a>
+      <a href="#about">About</a>
+      <a href="#newsroom">Newsroom</a>
+    </nav>
+    <div class="right">
+      <a class="btn red" href="#contact">Talk to Entourage <span class="ar">↗</span></a>
+      <button class="menu" id="menuBtn" aria-expanded="false" aria-controls="menu">Menu</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-img" role="img" aria-label="A team in conversation around a table with Las Vegas behind them"></div>
+  <div class="wrap">
+    <span class="kicker">Technology and lifestyle incubator · Las Vegas · Since 2009</span>
+    <h1>Capital for founders. Capability for what comes next.</h1>
+    <p>Entourage is a technology and lifestyle incubator. We invest money, expertise and resources in technology and lifestyle companies, acquire businesses with potential, and build through Cool Inc.</p>
+    <div class="ctas">
+      <a class="btn red" href="#contact">Talk to Entourage <span class="ar">↗</span></a>
+      <a class="btn ghost" href="#portfolio">Explore the portfolio <span class="ar">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- BAND -->
+<section class="band" aria-label="Highlights">
+  <div class="wrap">
+    <h2>Built by operators, for founders.</h2>
+    <div><b>25+</b><span>Years operating</span></div>
+    <div><b>6</b><span>Companies</span></div>
+    <div><b class="m">Technology + lifestyle</b><span>Focus</span></div>
+  </div>
+</section>
+
+<!-- WHAT WE DO -->
+<section class="sec" id="what">
+  <div class="wrap">
+    <span class="kicker rv">What we do</span>
+    <h2 class="h2 rv">More than capital. A working partnership.</h2>
+    <ol class="rows">
+      <li class="row rv"><span class="n">01</span><h3>Acquire</h3><p>Take responsibility for companies with durable potential.</p></li>
+      <li class="row rv"><span class="n">02</span><h3>Back founders</h3><p>Invest capital, expertise, resources and active board participation.</p></li>
+      <li class="row rv"><span class="n">03</span><h3>Build with Cool Inc.</h3><p>Ship products through an embedded software, design and consulting hub.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="sec dark" id="portfolio">
+  <div class="wrap">
+    <div class="pf-head">
+      <div>
+        <span class="kicker rv">Portfolio</span>
+        <h2 class="h2 rv">A portfolio built around founders,<br>technology and influence.</h2>
+        <p class="sub rv">A focused portfolio that combines ownership, strategic investment and active support.</p>
+      </div>
+      <div class="filters rv" role="group" aria-label="Filter companies">
+        <button type="button" data-f="all" aria-pressed="true">All 06</button>
+        <button type="button" data-f="owned" aria-pressed="false">Owned 03</button>
+        <button type="button" data-f="strategic" aria-pressed="false">Strategic 03</button>
+      </div>
+    </div>
+    <div class="pf-grid">
+      <article class="co rv" data-k="owned" title="Cybersecurity for small and mid-sized businesses, acquired by the group in 2019.">
+        <span class="tag">Owned · Cybersecurity</span>
+        <div class="lg"><img src="assets/logo-axiom.png" alt="Axiom Cyber Solutions"></div>
+        <div class="ft"><span>Acquired 2019</span><span class="go" aria-hidden="true">↗</span></div>
+      </article>
+      <article class="co rv" data-k="owned" title="The group's build arm. Product development, design and technology consulting.">
+        <span class="tag">Owned · Software, design and consulting</span>
+        <div class="lg"><img src="assets/logo-coolinc.png" alt="Cool Incubator"></div>
+        <div class="ft"><span>Wholly owned</span><span class="go" aria-hidden="true">↗</span></div>
+      </article>
+      <article class="co rv" data-k="strategic" title="Streaming channels and original content reaching viewers worldwide.">
+        <span class="tag">Strategic · Streaming</span>
+        <div class="lg"><img src="assets/logo-tv4.png" alt="TV4 Entertainment"></div>
+        <div class="ft"><span>Board seat</span><span class="go" aria-hidden="true">↗</span></div>
+      </article>
+      <article class="co dk rv" data-k="strategic" title="An award-winning craft brewery with a Southern California twist.">
+        <span class="tag">Strategic · Craft beverage</span>
+        <div class="lg"><img src="assets/logo-smbw.png" alt="Santa Monica Brew Works"></div>
+        <div class="ft"><span>Strategic</span><span class="go" aria-hidden="true">↗</span></div>
+      </article>
+      <article class="co rv" data-k="owned" title="Modern media across film, television, games and music, plus brand licensing.">
+        <span class="tag">Owned · Media</span>
+        <div class="lg"><img src="assets/logo-prod310.png" alt="3.1.0. Productions"></div>
+        <div class="ft"><span>Wholly owned</span><span class="go" aria-hidden="true">↗</span></div>
+      </article>
+      <article class="co rv" data-k="strategic" title="A patent-pending rewards platform built for the video gaming market.">
+        <span class="tag">Strategic · Gaming rewards</span>
+        <div class="lg"><img src="assets/logo-signalzero.png" alt="Signal Zero"></div>
+        <div class="ft"><span>Strategic</span><span class="go" aria-hidden="true">↗</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- RECORD -->
+<section class="sec" id="record">
+  <div class="wrap">
+    <span class="kicker rv">The record</span>
+    <h2 class="h2 rv">The record.</h2>
+    <p class="sec-sub rv">What the companies in and around the group have done. Figures come from the awarding organisations, not from us.</p>
+    <ol class="tl">
+      <li class="rv"><span class="y">2004</span><div><h3>House Advantage is founded</h3><p>Jon starts a loyalty and marketing technology company in Las Vegas, later building teams there and in India.</p></div></li>
+      <li class="rv"><span class="y">2009</span><div><h3>Entourage Investment Group is founded</h3><p>A private group to own and back technology and lifestyle businesses, with operators rather than passive money.</p></div></li>
+      <li class="rv"><span class="y">2019</span><div><h3>Independently ranked for growth</h3><p>House Advantage at No. 1453 on the Inc. 5000 and 347th on Deloitte's Technology Fast 500, after 287 percent growth. TV4 Entertainment named to Fast Company's Most Innovative Companies the same year.</p></div></li>
+      <li class="rv"><span class="y">2022</span><div><h3>Light &amp; Wonder acquires the House Advantage assets</h3><p>HALo and around twenty of the team move to the gaming industry leader. Eighteen years from founding to exit.</p></div></li>
+      <li class="now rv"><span class="y">Now</span><div><h3>Building the next ones</h3><p>Cool Inc gives the group its own product, design and engineering team, so the next company gets built as well as backed.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- COOL INC -->
+<section class="sec dark" id="cool-inc">
+  <div class="wrap">
+    <div class="ci">
+      <div>
+        <span class="kicker mute rv">Cool Incubator</span>
+        <h2 class="h2 rv">The development hub inside the investment model.</h2>
+        <p class="rv">Cool Inc is Entourage's wholly owned product, software, design and consulting practice, giving ambitious teams practical capacity to move from idea to shipped experience.</p>
+        <a class="btn red rv" href="#contact">Meet Cool Inc <span class="ar">↗</span></a>
+      </div>
+      <figure class="rv">
+        <img src="assets/tech.jpg" alt="Two designers reviewing an app layout on screens at night" loading="lazy">
+        <span class="badge"><img src="assets/logo-coolinc.png" alt="Cool Inc logo"></span>
+      </figure>
+    </div>
+    <div class="svc">
+      <div class="rv">Product development<span>Idea to launch</span></div>
+      <div class="rv">Design<span>UI, UX, design systems</span></div>
+      <div class="rv">Web and mobile builds<span>Engineering</span></div>
+      <div class="rv">Technology consulting<span>Advisory</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="sec" id="impact">
+  <div class="wrap">
+    <span class="kicker rv">Impact</span>
+    <h2 class="h2 rv">Investing in possibility beyond business.</h2>
+    <div class="imp">
+      <div class="rv">
+        <div class="lgbox"><img src="assets/logo-makeawish.png" alt="Make-A-Wish Southern Nevada"></div>
+        <div class="fig">15<small>yrs</small></div>
+        <h3>Make-A-Wish Southern Nevada</h3>
+        <p>Granting wishes for children with critical illnesses.</p>
+        <p style="margin-top:6px">Jon chairs the board.</p>
+      </div>
+      <div class="rv">
+        <div class="lgbox"><img src="assets/logo-olivecrest.png" alt="Olive Crest"></div>
+        <div class="fig">3,500</div>
+        <h3>Olive Crest, every day</h3>
+        <p>Children and families served daily across California, Nevada and the Pacific Northwest.</p>
+      </div>
+    </div>
+    <div class="quote">
+      <blockquote class="rv">“They are the unsung heroes in the Las Vegas community, helping so many local young people on the path to success.”<cite>Jon Wolfe, on Olive Crest</cite></blockquote>
+      <figure class="rv">
+        <img src="assets/giving.jpg" alt="Parents and children doing crafts together at long tables" loading="lazy">
+        <figcaption>An Olive Crest programme day.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec mist" id="about">
+  <div class="wrap about">
+    <div class="photo rv"><img src="assets/jon.jpg" alt="Portrait of Jon C. Wolfe"></div>
+    <div>
+      <span class="kicker rv">About</span>
+      <h2 class="h2 rv">Jon C. Wolfe</h2>
+      <p class="bio rv">Jon founded Entourage Investment Group in 2009. He previously founded House Advantage, whose assets Light &amp; Wonder acquired in 2022, and brings 25+ years of leadership across casinos, technology and loyalty.</p>
+      <p class="more" id="jonMore">Today he invests in and builds technology and lifestyle companies, takes board seats where he can be useful, and gives the same attention to the charities the group supports.</p>
+      <button class="btn black rv" id="jonBtn" type="button" aria-expanded="false" aria-controls="jonMore">Read Jon's story <span class="ar">↗</span></button>
+      <div class="tr rv">
+        <h3>Track record</h3>
+        <ul>
+          <li>SVP and CIO, Horseshoe Gaming Group and Resorts International<span>Gaming</span></li>
+          <li>EVP Operations and CIO, Binion Enterprises<span>Gaming</span></li>
+          <li>Founder and CEO, House Advantage<span>2004, assets acquired by L&amp;W 2022</span></li>
+          <li>Founder, Chairman and CEO, Entourage Investment Group<span>2009, present</span></li>
+          <li>Member, Forbes Technology Council<span>2019, present</span></li>
+          <li>Chairman of the Board, Make-A-Wish Southern Nevada<span>Present</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSROOM -->
+<section class="sec" id="newsroom">
+  <div class="wrap">
+    <span class="kicker rv">Newsroom</span>
+    <h2 class="h2 rv">Signals from the portfolio and community.</h2>
+    <div class="news">
+      <a class="nc lead rv" href="https://explore.lnw.com/newsroom/light-wonder-advances-its-cross-platform-vision-with-the-acquisition-of-house-advantage-assets/" target="_blank" rel="noopener">
+        <span class="kicker">Latest</span>
+        <h3>Light &amp; Wonder acquires the House Advantage assets</h3>
+        <p>HALo and around twenty of the team moved to the gaming industry leader in 2022.</p>
+        <span class="rs">Read story ↗</span>
+      </a>
+      <a class="nc rv" href="#cool-inc">
+        <span class="kicker">Briefing</span>
+        <h3>How Cool Inc helps teams ship</h3>
+        <p>Inside Entourage's product, software, design and consulting development hub.</p>
+        <span class="rs">Read story ↗</span>
+      </a>
+      <a class="nc rv" href="#portfolio">
+        <span class="kicker">Briefing</span>
+        <h3>Axiom and the practical work of cybersecurity</h3>
+        <p>A look at the cybersecurity company Entourage acquired in 2019.</p>
+        <span class="rs">Read story ↗</span>
+      </a>
+      <a class="nc rv" href="#impact">
+        <span class="kicker">Briefing</span>
+        <h3>Fifteen years of wishes in Southern Nevada</h3>
+        <p>Entourage's continuing support for Make-A-Wish Southern Nevada.</p>
+        <span class="rs">Read story ↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDERS -->
+<section class="sec dark" id="founders">
+  <div class="wrap">
+    <span class="kicker rv">For founders</span>
+    <h2 class="h2 rv">What happens after you pitch.</h2>
+    <ol class="rows">
+      <li class="row rv"><span class="n">01</span><div style="grid-column:2/-1"><h3>Send us a paragraph</h3><p style="margin-top:10px">No deck needed to start. What you are building, who it is for, and where you are stuck.</p></div></li>
+      <li class="row rv"><span class="n">02</span><div style="grid-column:2/-1"><h3>You hear back within a week</h3><p style="margin-top:10px">Either way. A no comes with the reason, so you are not left guessing.</p></div></li>
+      <li class="row rv"><span class="n">03</span><div style="grid-column:2/-1"><h3>If it fits, you meet Jon</h3><p style="margin-top:10px">The conversation covers what you need beyond money: the build, the board, the introductions.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec" id="contact">
+  <div class="wrap ct">
+    <div class="rv">
+      <span class="kicker">Contact</span>
+      <h2 class="h2">Bring us the ambitious version.</h2>
+      <p class="lede">Founders, co-investors, press and charity partners: we'd like to hear what you're building.</p>
+      <address>
+        10100 W. Charleston Blvd., Suite 130<br>
+        Las Vegas, NV 89135<br>
+        <a href="tel:+13103623514">(310) 362-3514</a><br>
+        <a href="mailto:info@entouragegrp.com">info@entouragegrp.com</a>
+      </address>
+    </div>
+    <form class="pitch rv" id="pitch" novalidate>
+      <label>Name<input name="name" autocomplete="name"></label>
+      <label>Email<input name="email" type="email" autocomplete="email"></label>
+      <label>Company or product<input name="company"></label>
+      <label>What are you building<textarea name="message"></textarea></label>
+      <button class="btn red" type="submit">Send message <span class="ar">↗</span></button>
+      <p class="sent" id="sent" role="status" hidden>Thanks. This is a concept page, so nothing was sent.</p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-top">
+      <a class="logo" href="#top"><img src="assets/Entourage-logo-white.webp" alt="Entourage Investment Group"></a>
+      <div>
+        <h3>Useful signals, occasionally.</h3>
+        <form class="sign" id="news"><input type="email" placeholder="Email address" aria-label="Email address"><button class="btn red" type="submit">Sign up <span class="ar">↗</span></button></form>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span>© Entourage Investment Group</span>
+      <span><a href="#">LinkedIn</a> · <a href="#">Instagram</a> · <a href="#">X</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  // Header turns solid once the hero scrolls away
+  const nav = document.getElementById('nav');
+  const hero = document.querySelector('.hero');
+  const solid = () => nav.classList.toggle('solid', scrollY > hero.offsetHeight - 80);
+  solid(); addEventListener('scroll', solid, {passive:true});
+
+  // Mobile menu
+  const btn = document.getElementById('menuBtn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => { const o = menu.classList.toggle('open'); btn.setAttribute('aria-expanded', o); nav.classList.add('solid'); });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { menu.classList.remove('open'); btn.setAttribute('aria-expanded', false); }));
+
+  // Highlight the nav link for the section in view
+  const links = [...menu.querySelectorAll('a')];
+  const spy = () => {
+    let cur = null, best = -1;
+    links.forEach(a => { const t = document.querySelector(a.getAttribute('href')); if (t && t.offsetTop <= scrollY + 120 && t.offsetTop > best) { best = t.offsetTop; cur = a; } });
+    links.forEach(a => a.classList.toggle('current', a === cur));
+  };
+  spy(); addEventListener('scroll', spy, {passive:true});
+
+  // Portfolio filters
+  const fb = document.querySelectorAll('.filters button'), cos = document.querySelectorAll('.co');
+  fb.forEach(b => b.addEventListener('click', () => {
+    fb.forEach(x => x.setAttribute('aria-pressed', x === b));
+    cos.forEach(c => c.hidden = !(b.dataset.f === 'all' || c.dataset.k === b.dataset.f));
+  }));
+
+  // Jon's story expands in place
+  const jb = document.getElementById('jonBtn'), jm = document.getElementById('jonMore');
+  jb.addEventListener('click', () => {
+    const o = jm.classList.toggle('open'); jb.setAttribute('aria-expanded', o);
+    jb.firstChild.textContent = o ? 'Show less ' : "Read Jon's story ";
+  });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.12, rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  // Forms (concept only, nothing is sent)
+  document.getElementById('pitch').addEventListener('submit', e => { e.preventDefault(); document.getElementById('sent').hidden = false; });
+  document.getElementById('news').addEventListener('submit', e => { e.preventDefault(); const i = e.target.querySelector('input'); i.value = ''; i.placeholder = 'Thanks. Concept page, nothing sent.'; });
+})();
+</script>
+</body>
+</html>

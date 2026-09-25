@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entourage Themes</title>
+<style>
+  :root { --bg: #fafaf9; --fg: #1c1917; --muted: #78716c; --card: #fff; --line: #e7e5e4; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0c0a09; --fg: #fafaf9; --muted: #a8a29e; --card: #1c1917; --line: #292524; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 system-ui, -apple-system, sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 64px 16px; }
+  h1 { font-size: 28px; margin: 0 0 4px; }
+  p { color: var(--muted); margin: 0 0 32px; }
+  ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  a { display: flex; justify-content: space-between; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; color: inherit; text-decoration: none; font-weight: 500; }
+  a:hover { border-color: var(--muted); }
+  a span { color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Entourage</h1>
+  <p>Website theme options</p>
+  <ul>
+    <li><a href="Theme1/">Theme 1 <span>→</span></a></li>
+    <li><a href="Theme2/">Theme 2 <span>→</span></a></li>
+    <li><a href="Theme3/">Theme 3 <span>→</span></a></li>
+    <li><a href="Theme4/">Theme 4 <span>→</span></a></li>
+    <li><a href="Theme5/">Theme 5 <span>→</span></a></li>
+  </ul>
+</main>
+</body>
+</html>
