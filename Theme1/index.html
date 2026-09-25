@@ -75,7 +75,10 @@
 
   /* ---------- Nav ---------- */
   .nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:24px;
-    padding:calc(18px + env(safe-area-inset-top,0px)) var(--gutter) 18px;mix-blend-mode:difference}
+    padding:calc(18px + env(safe-area-inset-top,0px)) var(--gutter) 18px;mix-blend-mode:difference;
+    transition:background-color .5s var(--ease),padding .5s var(--ease),border-color .5s var(--ease),box-shadow .5s var(--ease);border-bottom:1px solid transparent}
+  .nav.scrolled{mix-blend-mode:normal;background:rgba(5,7,13,.72);-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);
+    border-bottom-color:var(--line);box-shadow:0 12px 40px -20px rgba(0,0,0,.8);padding-top:calc(12px + env(safe-area-inset-top,0px));padding-bottom:12px}
   .brand{display:flex;align-items:center;gap:12px;font-family:var(--display);font-variation-settings:"wdth" 150;font-weight:600;letter-spacing:.08em;font-size:15px}
   .brand-mark{width:26px;height:26px}
   .nav-links{display:flex;gap:30px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase}
@@ -844,9 +847,12 @@
   /* ---------------- Rail ---------------- */
   const railFill = document.getElementById('railFill'), railIdx = document.getElementById('railIdx'), railLabel = document.getElementById('railLabel');
   let lastRail = -1;
+  const navEl = document.querySelector('.nav');
 
   function onScroll(){
     const y = scrollY, vh = innerHeight;
+    // nav overlay once the page leaves the top
+    navEl.classList.toggle('scrolled', y > 40);
     // portfolio track
     if (pfHorizontal) {
       const r = pfSection.getBoundingClientRect();

@@ -37,6 +37,18 @@
     .contact .approach-grid{align-items:start}.addr{font-style:normal;font-size:14px;line-height:1.8;color:#b7b9ae}.addr strong{display:block;color:var(--paper)}.addr a:hover{color:var(--acid)}.pitch{display:grid;grid-template-columns:1fr 1fr;gap:22px 18px}.pitch label{display:grid;gap:10px}.pitch label.full{grid-column:1/-1}.pitch .mono{color:#a1a399}.pitch input,.pitch textarea{font:15px Manrope,Arial,sans-serif;color:var(--paper);background:transparent;border:0;border-bottom:1px solid var(--line);padding:10px 0;border-radius:0;resize:vertical}.pitch input:focus,.pitch textarea:focus{outline:none;border-color:var(--acid)}.pitch .button{justify-self:start;border:0;cursor:pointer}.sent{grid-column:1/-1;color:var(--acid);margin:0}
     .news{display:flex;gap:8px;margin-top:28px;flex-wrap:wrap}.news input{font:14px Manrope,Arial,sans-serif;color:var(--paper);background:transparent;border:1px solid var(--line);padding:14px 16px;min-width:min(280px,70vw)}.news input:focus{outline:none;border-color:var(--acid)}.news .button{border:0;cursor:pointer}.footer-nav{flex-wrap:wrap;max-width:420px;justify-content:flex-end}
     @media(max-width:960px){.values.four{grid-template-columns:1fr 1fr}.give-grid,.ci-grid,.leader-grid{grid-template-columns:1fr}.leader-photo{max-width:380px}}
+    /* Revisions: growth hero, 3-up companies, giving contrast, smaller portrait, contact vs footer */
+    .hero-legend{position:absolute;z-index:2;right:var(--pad);top:22%;display:grid;gap:10px;color:#c8cbbf}.hero-legend div{display:flex;align-items:center;gap:10px}.hero-legend i{width:18px;height:2px;background:var(--acid)}.hero-legend i.bar{width:8px;height:12px;background:rgba(213,251,101,.35);border:1px solid var(--acid)}.hero-legend i.dot{width:8px;height:8px;border-radius:50%;box-shadow:0 0 12px var(--acid)}
+    .cards{grid-template-columns:repeat(3,minmax(0,1fr))}.card{min-height:430px;padding:26px}.orbit{width:min(21vw,250px)}.card > .plate{width:min(64%,200px);height:124px;margin:28px 0 24px;padding:16px 20px}.card h3{font-size:clamp(24px,2.2vw,32px)}.card-foot{flex-wrap:wrap}
+    .impact .kicker{color:var(--ink);font-weight:500;opacity:1}.impact-lede{color:var(--ink);font-size:17px;font-weight:500;max-width:600px}.impact-glyph{opacity:.045;right:4%}
+    .give-stat{background:var(--ink);border:0;color:var(--paper)}.give-stat b{color:var(--acid)}.give-stat strong{color:var(--paper);font-size:16px}.give-stat p{color:#d6d7cf;font-size:14px}.give-stat .plate{box-shadow:none}
+    .give-photo figcaption{background:linear-gradient(transparent,rgba(16,18,15,.96) 40%);font-size:clamp(18px,1.7vw,23px)}
+    .leader-grid{grid-template-columns:minmax(0,340px) 1fr;gap:clamp(40px,7vw,110px)}.leader-photo{max-width:340px;position:sticky;top:40px}
+    .contact{background:#1b1f19;border-top:1px solid rgba(213,251,101,.18)}.contact .pitch{background:var(--ink);border:1px solid var(--line);padding:clamp(24px,3vw,40px)}.contact .addr{margin-top:34px;padding-top:26px;border-top:1px solid var(--line)}
+    footer{background:#070806;border-top:2px solid var(--acid);position:relative;overflow:hidden;padding-bottom:0}.footer-bottom{position:relative;z-index:1}.footer-wordmark{display:block;font-weight:800;font-size:clamp(56px,15.6vw,270px);letter-spacing:-.07em;line-height:.8;margin:44px 0 -.1em -.03em;color:transparent;-webkit-text-stroke:1px rgba(213,251,101,.28);user-select:none;white-space:nowrap}
+    @media(max-width:1100px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.orbit{width:min(30vw,260px)}}
+    @media(max-width:960px){.leader-grid{grid-template-columns:1fr}.leader-photo{max-width:280px;position:static}}
+    @media(max-width:760px){.cards{grid-template-columns:1fr}.orbit{width:240px}.hero-legend{display:none}#scene{opacity:.75}}
     @media(max-width:760px){.values.four{grid-template-columns:1fr}.timeline li{grid-template-columns:1fr;gap:8px}.services div,.track li{flex-direction:column;gap:4px}.services .mono,.track .mono{text-align:left;white-space:normal}.give-stat{grid-template-columns:1fr}.give-stat .plate{grid-row:auto;margin-bottom:14px}.pitch{grid-template-columns:1fr}.footer-nav{justify-content:flex-start}.plate{width:min(52%,200px)}.card > .plate{width:min(62%,210px);height:126px;margin:26px 0 24px}.card .card-art{place-items:center;padding-right:0}}
   </style>
 </head>
@@ -44,7 +56,7 @@
   <div class="grain"></div>
   <header class="nav"><a class="brand" href="#top" aria-label="Entourage Investment Group, back to top"><img class="brand-logo" src="assets/entourage-logo-white.webp" alt="Entourage Investment Group"></a><nav class="nav-links"><a href="#about">About</a><a href="#portfolio">Investments</a><a href="#cool-inc">Cool Inc</a><a href="#impact">Giving</a><a class="nav-cta" href="#contact">Get in touch ↗</a></nav></header>
   <main id="top">
-    <section class="hero" aria-label="Introduction"><div class="hero-grid"></div><canvas id="scene"></canvas><div class="hero-copy"><div class="eyebrow mono">The incubator · Las Vegas · Since 2009</div><h1 aria-label="Entourage is a technology and lifestyle incubator.">Technology<br>and lifestyle<br><em>incubator.</em></h1><p class="hero-sub">We put money, expertise and a build team behind companies people use every day. Some we acquire outright. Some we back early. All of them get operators in the room, not just a cheque.</p><div class="hero-actions"><a class="button" href="#portfolio">See the companies <span>↗</span></a><a class="text-link" href="#founders">Pitch us <span>↓</span></a></div></div><div class="orbital-label mono">Three modes<br><span>Acquire<br>Back<br>Build</span></div><div class="scroll-note mono"><span class="scroll-line"></span>Scroll to explore</div><div class="hero-index mono">Las Vegas, Nevada<strong>Owned and strategic</strong></div></section>
+    <section class="hero" aria-label="Introduction"><div class="hero-grid"></div><canvas id="scene"></canvas><div class="hero-copy"><div class="eyebrow mono">The incubator · Las Vegas · Since 2009</div><h1 aria-label="Entourage is a technology and lifestyle incubator.">Technology<br>and lifestyle<br><em>incubator.</em></h1><p class="hero-sub">We put money, expertise and a build team behind companies people use every day. Some we acquire outright. Some we back early. All of them get operators in the room, not just a cheque.</p><div class="hero-actions"><a class="button" href="#portfolio">See the companies <span>↗</span></a><a class="text-link" href="#founders">Pitch us <span>↓</span></a></div></div><div class="hero-legend mono" aria-hidden="true"><div><i class="bar"></i>Capital in</div><div><i></i>Companies grown</div><div><i class="dot"></i>Value built</div></div><div class="scroll-note mono"><span class="scroll-line"></span>Scroll to explore</div><div class="hero-index mono">Las Vegas, Nevada<strong>Owned and strategic</strong></div></section>
     <div class="ticker" aria-hidden="true"><div class="ticker-track"><span>Acquire</span><b>✳</b><span>Back founders</span><b>✳</b><span>Build with Cool Inc</span><b>✳</b><span>Board level, hands on</span><b>✳</b><span>Acquire</span><b>✳</b><span>Back founders</span><b>✳</b><span>Build with Cool Inc</span><b>✳</b><span>Board level, hands on</span><b>✳</b></div></div>
 
     <section class="intro" id="about"><div class="section-head reveal"><div><div class="kicker mono">01 · Three sides of one group</div><h2 class="section-title">We don't just fund it.<br><em>We build it.</em></h2></div><div class="mono">Base<br>Las Vegas, Nevada</div></div><div class="intro-row reveal"><p class="intro-statement">Entourage is a technology and lifestyle incubator. <span>We invest, acquire and build companies, and we back the causes that serve children and families.</span></p><p class="intro-copy">Cool Inc is our own product, design and engineering team. When a company we back needs an app, a platform or a rebuild, the people who do it are already on the payroll. It is the same discipline that built HALo.</p></div><div class="pillars reveal">
@@ -82,21 +94,61 @@
 
     <section class="portfolio contact" id="contact"><div class="approach-grid reveal"><div><div class="kicker mono">09 · Contact</div><h2 class="section-title">Tell us what <em>you are building.</em></h2><p class="ci-copy">If your company fits the way we invest and build, we would like to hear about it. Founders get a reply from a person, not a form letter.</p><address class="addr"><strong>Entourage Investment Group, LLC</strong>10100 W. Charleston Blvd., Suite 130<br>Las Vegas, NV 89135<br><a href="tel:+13103623514">(310) 362-3514</a><br><a href="mailto:info@entouragegrp.com">info@entouragegrp.com</a></address></div><form class="pitch" id="pitch" novalidate><label><span class="mono">Name</span><input name="name" autocomplete="name"></label><label><span class="mono">Email</span><input name="email" type="email" autocomplete="email"></label><label class="full"><span class="mono">Company or product</span><input name="company"></label><label class="full"><span class="mono">What are you building?</span><textarea name="message" rows="4"></textarea></label><button class="button" type="submit">Send message <span>↗</span></button><p class="sent mono" id="sent" role="status" hidden>Thanks. This is a concept page, so nothing was sent.</p></form></div></section>
   </main>
-  <footer><div class="footer-top"><div><div class="brand"><img class="brand-logo lg" src="assets/entourage-logo-white.webp" alt="Entourage Investment Group"></div><p class="footer-message">A technology and lifestyle<br><span>incubator in Las Vegas.</span></p><form class="news" id="news"><input type="email" placeholder="Email for group news" aria-label="Email for group news"><button class="button" type="submit">Subscribe <span>↗</span></button></form></div><nav class="footer-nav"><a href="#portfolio">Companies</a><a href="#cool-inc">Cool Inc</a><a href="#how">How we work</a><a href="#record">The record</a><a href="#founders">For founders</a><a href="#leader">About</a><a href="#impact">Giving</a><a href="#contact">Contact</a></nav></div><div class="footer-bottom"><span class="mono">© 2026 Entourage Investment Group, LLC</span><span class="mono">LinkedIn · Instagram · X</span></div></footer>
+  <footer><div class="footer-top"><div><div class="brand"><img class="brand-logo lg" src="assets/entourage-logo-white.webp" alt="Entourage Investment Group"></div><p class="footer-message">A technology and lifestyle<br><span>incubator in Las Vegas.</span></p><form class="news" id="news"><input type="email" placeholder="Email for group news" aria-label="Email for group news"><button class="button" type="submit">Subscribe <span>↗</span></button></form></div><nav class="footer-nav"><a href="#portfolio">Companies</a><a href="#cool-inc">Cool Inc</a><a href="#how">How we work</a><a href="#record">The record</a><a href="#founders">For founders</a><a href="#leader">About</a><a href="#impact">Giving</a><a href="#contact">Contact</a></nav></div><div class="footer-bottom"><span class="mono">© 2026 Entourage Investment Group, LLC</span><span class="mono">LinkedIn · Instagram · X</span></div><span class="footer-wordmark" aria-hidden="true">ENTOURAGE</span></footer>
   <script type="module">
     import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js';
     const canvas=document.querySelector('#scene'), hero=document.querySelector('.hero');
     const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-    const scene=new THREE.Scene(), camera=new THREE.PerspectiveCamera(42,1,.1,100);camera.position.z=8;
+    const scene=new THREE.Scene(), camera=new THREE.PerspectiveCamera(34,1,.1,100);camera.position.set(7.2,5.4,10.5);camera.lookAt(0,1.5,0);
+    const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const ACID=new THREE.Color(0xd5fb65), DEEP=new THREE.Color(0x2c3a1c);
     const group=new THREE.Group();scene.add(group);
-    const core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.15,3),new THREE.MeshBasicMaterial({color:0xd5fb65,wireframe:true,transparent:true,opacity:.42}));group.add(core);
-    const shell=new THREE.Mesh(new THREE.IcosahedronGeometry(1.07,2),new THREE.MeshBasicMaterial({color:0xc7d2aa,wireframe:true,transparent:true,opacity:.12}));group.add(shell);
-    const rings=[];for(let i=0;i<3;i++){const ring=new THREE.Mesh(new THREE.TorusGeometry(1.65+i*.22,.003,8,180),new THREE.MeshBasicMaterial({color:i===1?0xd5fb65:0xbac4a2,transparent:true,opacity:.38-i*.07}));ring.rotation.set(.8+i*.55,.3+i*.45,.4);group.add(ring);rings.push(ring)}
-    const points=[];for(let i=0;i<210;i++){const p=new THREE.Vector3().randomDirection().multiplyScalar(1.25+Math.random()*1.5);points.push(p.x,p.y,p.z)}
-    const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(points,3));const stars=new THREE.Points(geo,new THREE.PointsMaterial({color:0xe7f3cb,size:.018,transparent:true,opacity:.7}));group.add(stars);
-    const resize=()=>{const w=hero.clientWidth,h=hero.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();group.position.x=w<760?.9:1.45;group.scale.setScalar(w<760?.78:1.05)};new ResizeObserver(resize).observe(hero);resize();
-    let mx=0,my=0,scroll=0;window.addEventListener('pointermove',e=>{mx=(e.clientX/innerWidth-.5)*.55;my=(e.clientY/innerHeight-.5)*.35},{passive:true});window.addEventListener('scroll',()=>{scroll=scrollY/Math.max(1,hero.offsetHeight)},{passive:true});
-    const clock=new THREE.Clock();function animate(){const t=clock.getElapsedTime();group.rotation.y+=(mx+scroll*.34-group.rotation.y)*.025;group.rotation.x+=(-my+group.rotation.x*-1+Math.sin(t*.18)*.08)*.018;core.rotation.y=t*.08;core.rotation.x=t*.045;shell.rotation.y=-t*.035;rings.forEach((r,i)=>{r.rotation.z+=.0015*(i+1);r.rotation.x+=.0007*(i%2?1:-1)});stars.rotation.y=-t*.018;renderer.render(scene,camera);requestAnimationFrame(animate)}animate();
+    // Bar field: a portfolio of positions compounding left to right
+    const COLS=10, ROWS=5, GAP=.56, W=.3, bars=[];
+    const x0=-(COLS-1)*GAP/2, z0=-(ROWS-1)*GAP/2;
+    const unit=new THREE.BoxGeometry(W,1,W);unit.translate(0,.5,0);
+    const edgeGeo=new THREE.EdgesGeometry(unit);
+    const fillMat=new THREE.MeshBasicMaterial({color:0xffffff,vertexColors:false,transparent:true,opacity:.16,depthWrite:false});
+    const fills=new THREE.InstancedMesh(unit,fillMat,COLS*ROWS);fills.instanceMatrix.setUsage(THREE.DynamicDrawUsage);group.add(fills);
+    const edgeMat=new THREE.LineBasicMaterial({color:0xd5fb65,transparent:true,opacity:.5});
+    for(let i=0;i<COLS;i++)for(let j=0;j<ROWS;j++){const e=new THREE.LineSegments(edgeGeo,edgeMat.clone());e.position.set(x0+i*GAP,0,z0+j*GAP);group.add(e);bars.push({i,j,e,seed:Math.random()*6.28})}
+    const trend=u=>.25+2.5*Math.pow(u,1.7);
+    // Base grid
+    const grid=new THREE.GridHelper(COLS*GAP+1.6,(COLS+3)*2,0x5b6a3a,0x2a3122);grid.material.transparent=true;grid.material.opacity=.35;group.add(grid);
+    // Growth curve along the front edge
+    const N=160, zf=-z0+GAP*.35, curvePts=[];
+    for(let k=0;k<N;k++){const u=k/(N-1);curvePts.push(new THREE.Vector3(x0-.2+u*((COLS-1)*GAP+.4),trend(u)*1.02+.45+Math.sin(u*14)*.06*(1-u),zf))}
+    const lineGeo=new THREE.BufferGeometry().setFromPoints(curvePts);
+    const line=new THREE.Line(lineGeo,new THREE.LineBasicMaterial({color:0xd5fb65,transparent:true,opacity:.95}));group.add(line);
+    const shadowGeo=new THREE.BufferGeometry().setFromPoints(curvePts.map(p=>new THREE.Vector3(p.x,.002,p.z)));
+    const shadow=new THREE.Line(shadowGeo,new THREE.LineBasicMaterial({color:0xd5fb65,transparent:true,opacity:.18}));group.add(shadow);
+    const head=new THREE.Mesh(new THREE.SphereGeometry(.07,20,20),new THREE.MeshBasicMaterial({color:0xf2ffc8}));group.add(head);
+    const halo=new THREE.Mesh(new THREE.SphereGeometry(.2,20,20),new THREE.MeshBasicMaterial({color:0xd5fb65,transparent:true,opacity:.22,depthWrite:false}));group.add(halo);
+    const drop=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(),new THREE.Vector3()]),new THREE.LineDashedMaterial({color:0xd5fb65,dashSize:.06,gapSize:.06,transparent:true,opacity:.5}));group.add(drop);
+    // Capital rising: particles drift upward through the field
+    const P=220, pPos=new Float32Array(P*3), pSpd=new Float32Array(P);
+    const spanX=(COLS-1)*GAP+1.2, spanZ=(ROWS-1)*GAP+1.2;
+    for(let k=0;k<P;k++){pPos[k*3]=(Math.random()-.5)*spanX;pPos[k*3+1]=Math.random()*4.6;pPos[k*3+2]=(Math.random()-.5)*spanZ;pSpd[k]=.004+Math.random()*.012}
+    const pGeo=new THREE.BufferGeometry();pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
+    const motes=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0xe7f3cb,size:.03,transparent:true,opacity:.65,depthWrite:false}));group.add(motes);
+    const resize=()=>{const w=hero.clientWidth,h=hero.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();const m=w<760;group.position.set(m?-.35:2.35,m?-2.05:.25,0);group.scale.setScalar(m?.46:.74)};new ResizeObserver(()=>{resize();reduce&&frame(9)}).observe(hero);resize();
+    let mx=0,my=0,scroll=0;window.addEventListener('pointermove',e=>{mx=(e.clientX/innerWidth-.5)*.5;my=(e.clientY/innerHeight-.5)*.2},{passive:true});window.addEventListener('scroll',()=>{scroll=Math.min(1,scrollY/Math.max(1,hero.offsetHeight))},{passive:true});
+    const m4=new THREE.Matrix4(), col=new THREE.Color(), tmp=new THREE.Vector3();
+    const clock=new THREE.Clock();
+    function frame(t){
+      const intro=reduce?1:1-Math.pow(1-Math.min(t/2.4,1),3);
+      group.rotation.y+=(-.42+mx-group.rotation.y)*.03;group.rotation.x+=(my*.4-group.rotation.x)*.03;
+      bars.forEach((b,n)=>{const u=b.i/(COLS-1);const wave=reduce?0:Math.sin(t*.9+b.i*.55+b.j*.8+b.seed)*.18;const h=Math.max(.06,(trend(u)*(.74+.1*(ROWS-1-b.j))+wave)*intro*(1+scroll*.35)*Math.min(1,intro*1.4+(1-u)*.2));
+        b.e.scale.set(1,h,1);b.e.material.opacity=.22+.55*u;
+        m4.makeScale(1,h,1);m4.setPosition(b.e.position);fills.setMatrixAt(n,m4);fills.setColorAt(n,col.copy(DEEP).lerp(ACID,.25+.75*u))});
+      fills.instanceMatrix.needsUpdate=true;fills.instanceColor&&(fills.instanceColor.needsUpdate=true);
+      const cyc=reduce?1:((t*.16)%1.25);const p=Math.min(1,cyc)*intro;const cnt=Math.max(2,Math.floor(p*N));lineGeo.setDrawRange(0,cnt);shadowGeo.setDrawRange(0,cnt);
+      const hp=curvePts[cnt-1];head.position.copy(hp);halo.position.copy(hp);halo.scale.setScalar(1+Math.sin(t*4)*.18);
+      drop.geometry.setFromPoints([hp,tmp.set(hp.x,0,hp.z)]);drop.computeLineDistances();
+      if(!reduce){for(let k=0;k<P;k++){pPos[k*3+1]+=pSpd[k];if(pPos[k*3+1]>4.8)pPos[k*3+1]=0}pGeo.attributes.position.needsUpdate=true}
+      renderer.render(scene,camera);
+    }
+    function animate(){frame(clock.getElapsedTime());if(!reduce)requestAnimationFrame(animate)}animate();
     document.getElementById('pitch').addEventListener('submit',e=>{e.preventDefault();document.getElementById('sent').hidden=false});document.getElementById('news').addEventListener('submit',e=>{e.preventDefault();const i=e.target.querySelector('input');i.value='';i.placeholder='Thanks. Concept page, nothing sent.'});
     const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');observer.unobserve(e.target)}}),{threshold:.13});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
   </script>

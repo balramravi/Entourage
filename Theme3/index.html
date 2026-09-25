@@ -106,19 +106,7 @@ h1,h2,h3,h4,p,figure,blockquote{margin:0}
 .hero-media .chip b{font-weight:600;color:var(--green)}
 @media (max-width:900px){.hero .inner{grid-template-columns:1fr}.hero-media{justify-self:start;max-width:420px}}
 
-/* MARQUEE */
-.marquee-sec{padding-block:36px 44px;border-bottom:1px solid var(--line)}
-.marquee-sec .eyebrow{display:block;text-align:center;margin-bottom:24px}
-.marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.track{display:flex;gap:14px;width:max-content;animation:scroll 48s linear infinite}
-.marquee:hover .track{animation-play-state:paused}
-@keyframes scroll{to{transform:translateX(-50%)}}
-.logo-card{height:96px;width:200px;flex:none;border:1px solid var(--line);border-radius:6px;display:grid;place-items:center;padding:14px 30px;background:#fff}
-.logo-card img{max-height:62px;width:auto;object-fit:contain}
-.logo-card.dark,.co .logo-wrap.dark{background:var(--slate);border-color:var(--slate)}
-.quote-card{height:96px;width:250px;flex:none;border:1px solid var(--line);border-radius:6px;padding:14px 18px;background:var(--tint);font-size:13.5px;line-height:1.4;color:var(--ink-2);display:flex;flex-direction:column;justify-content:space-between}
-.quote-card b{color:var(--green);font-weight:600;font-size:18px;letter-spacing:-.02em}
-.quote-card span{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.co .logo-wrap.dark{background:var(--slate);border-color:var(--slate)}
 
 /* MODES (dark green tabs) */
 .modes{background:var(--green-deep);color:#fff;position:relative;overflow:hidden}
@@ -156,24 +144,22 @@ h1,h2,h3,h4,p,figure,blockquote{margin:0}
 .stat span{font-size:12px;color:#9FC9BC;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.14)}
 @media (max-width:900px){.impact .wrap{grid-template-columns:1fr 1fr}.stat{padding:32px 20px}.stat:nth-child(odd){border-left:0;padding-left:0}.stat:nth-child(n+3){border-top:1px solid rgba(255,255,255,.14)}}
 
+/* PORTFOLIO LOGOS (marquee, contained to .wrap) */
+.logos-sec{padding-block:36px 44px;border-bottom:1px solid var(--line)}
+.logos-sec .eyebrow{display:block;text-align:center;margin-bottom:24px}
+.marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.track{list-style:none;margin:0;padding:0;display:flex;gap:14px;width:max-content;animation:scroll 32s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+@keyframes scroll{to{transform:translateX(calc(-50% - 7px))}}
+.logo-card{height:96px;width:200px;flex:none;border:1px solid var(--line);border-radius:6px;display:grid;place-items:center;padding:14px 30px;background:#fff}
+.logo-card img{max-height:62px;max-width:100%;width:auto;object-fit:contain}
+.logo-card.dark{background:var(--slate);border-color:var(--slate)}
+@media (max-width:560px){.logo-card{height:80px;width:160px;padding:12px 22px}}
 /* HOW (cards) */
 .cards4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .card{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff;display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
 .card:hover{transform:translateY(-4px);box-shadow:0 24px 50px -28px rgba(8,63,53,.35)}
 .card .vis{aspect-ratio:4/3;background:linear-gradient(160deg,var(--tint) 0%,var(--tint-2) 100%);display:grid;place-items:center;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
-.card .vis .mock{width:78%;background:#fff;border:1px solid var(--line);border-radius:6px;padding:14px;box-shadow:0 14px 34px -18px rgba(8,63,53,.35);font-size:12px;display:grid;gap:8px}
-.mock .row{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--ink-2)}
-.mock .lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
-.mock .big{font-size:24px;letter-spacing:-.03em;color:var(--ink)}
-.mock .pill{font-size:10px;padding:3px 7px;border-radius:99px;background:var(--tint-2);color:var(--green);font-weight:500}
-.mock .bar{height:6px;border-radius:3px;background:var(--line-2);overflow:hidden}
-.mock .bar i{display:block;height:100%;background:var(--green);border-radius:3px}
-.mock .chk{display:flex;gap:8px;align-items:center}
-.mock .chk::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--green);flex:none;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Ccircle cx='6' cy='6' r='6'/%3E%3C/svg%3E")}
-.mock .av{display:flex}
-.mock .av i{width:22px;height:22px;border-radius:50%;border:2px solid #fff;margin-left:-6px;background:var(--green-2)}
-.mock .av i:first-child{margin-left:0;background:#8FBFB1}
-.mock .av i:nth-child(3){background:var(--slate)}
 .card .txt{padding:22px 22px 26px;display:grid;gap:10px}
 .card .num{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
 .card h3{font-size:21px;font-weight:500;letter-spacing:-.02em}
@@ -183,6 +169,41 @@ h1,h2,h3,h4,p,figure,blockquote{margin:0}
 @media (max-width:1060px){.cards4{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.cards4{grid-template-columns:1fr}}
 
+/* How we work: banner + illustrations */
+.how-banner{position:relative;margin:0 0 16px;border-radius:8px;overflow:hidden;aspect-ratio:21/7;min-height:260px;background:var(--green-deep)}
+.how-banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.8) contrast(1.05)}
+.how-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,63,53,.94) 0%,rgba(8,63,53,.72) 42%,rgba(8,63,53,.08) 78%)}
+.how-banner figcaption{position:absolute;z-index:1;left:clamp(22px,4vw,48px);top:50%;transform:translateY(-50%);max-width:460px;color:#fff;display:grid;gap:14px}
+.how-banner .eyebrow{color:#9FD3C3}
+.how-banner strong{font-size:clamp(24px,3vw,38px);font-weight:500;letter-spacing:-.03em;line-height:1.1}
+.how-banner .chips{display:flex;flex-wrap:wrap;gap:8px}
+.how-banner .chips span{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border:1px solid rgba(255,255,255,.3);border-radius:99px;color:#DCEBE5}
+.card .ill{width:86%;height:auto;overflow:visible}
+.ill *{vector-effect:non-scaling-stroke}
+.ill .ax{stroke:var(--line);stroke-width:1.5}
+.ill .ln,.ill .route{fill:none;stroke:var(--green);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ill .route{stroke-dasharray:5 6}
+.ill .bars rect,.ill .blk{fill:#fff;stroke:#9FC4B8;stroke-width:1.25}
+.ill .bars rect{transform-box:fill-box;transform-origin:bottom;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.ill .hi,.ill .bars .hi,.ill .blk.hi{fill:var(--green);stroke:var(--green)}
+.ill .coins ellipse{fill:#fff;stroke:var(--green);stroke-width:1.25}.ill .coins .hi{fill:var(--green-ink)}
+.ill .stops circle{fill:#fff;stroke:var(--green);stroke-width:2}
+.ill .flag{fill:var(--green-ink);stroke:var(--green);stroke-width:1.5;stroke-linejoin:round}
+.ill .lb{font:500 7.5px var(--mono);letter-spacing:.1em;fill:var(--mute)}.ill text.lb:not([text-anchor]){text-anchor:middle}
+.ill .win{fill:#fff;stroke:#9FC4B8;stroke-width:1.25}
+.ill .dot{fill:var(--line)}
+.ill .gear circle{fill:#fff;stroke:var(--green);stroke-width:2}
+.ill .gear{transform-box:fill-box;transform-origin:center;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.ill .code{font:600 13px var(--mono);fill:var(--green)}
+.ill .links line{stroke:#9FC4B8;stroke-width:1.25}
+.ill .nodes circle{fill:#fff;stroke:var(--green);stroke-width:2;transition:fill .3s}
+.ill .hub{fill:var(--green)}.ill .hubt{font:600 15px var(--sans);fill:#fff;text-anchor:middle}
+.card:hover .ill .bars rect{transform:scaleY(1.08)}
+.card:hover .ill .gear{transform:rotate(120deg)}
+.card:hover .ill .nodes circle{fill:var(--green-ink)}
+.card:hover .ill .route{animation:dash 1.2s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-22}}
+@media (max-width:760px){.how-banner{aspect-ratio:auto;min-height:300px}.how-banner::after{background:linear-gradient(0deg,rgba(8,63,53,.95) 20%,rgba(8,63,53,.35))}.how-banner figcaption{top:auto;bottom:24px;transform:none;right:22px}}
 /* COMPANIES */
 .co-top{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:28px}
 .filters{display:flex;gap:6px;padding:4px;border:1px solid var(--line);border-radius:6px;background:var(--tint)}
@@ -204,9 +225,25 @@ h1,h2,h3,h4,p,figure,blockquote{margin:0}
 .co .over p{font-size:14px;color:#D2E4DE;line-height:1.45}
 .co .over .rel{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9FD3C3}
 .co[hidden]{display:none}
-.co-pitch{grid-column:span 2;aspect-ratio:auto}
-@media (max-width:1060px){.co-pitch{grid-column:1/-1}}
-@media (max-width:460px){.co-pitch{grid-column:auto}}
+.co-pitch{grid-column:span 2;aspect-ratio:auto;position:relative;overflow:hidden;background:radial-gradient(120% 140% at 100% 0%,var(--green-2) 0%,var(--green) 45%,var(--green-deep) 100%);border-color:var(--green);color:#fff;padding:clamp(22px,2.4vw,32px);display:grid;grid-template-rows:auto 1fr auto;gap:18px;text-decoration:none}
+.co-pitch::after{content:"";position:absolute;right:-60px;bottom:-60px;width:220px;height:220px;border-radius:50%;border:1px solid rgba(255,255,255,.14);box-shadow:0 0 0 36px rgba(255,255,255,.035),0 0 0 72px rgba(255,255,255,.025);pointer-events:none}
+.co-pitch .eyebrow{color:#9FD3C3}
+.co-pitch .pitch-mark{position:absolute;top:clamp(18px,2vw,28px);right:clamp(18px,2vw,28px);width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.3);display:grid;place-items:center;transition:background .3s,transform .5s cubic-bezier(.2,.8,.2,1)}
+.co-pitch .pitch-mark svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.co-pitch:hover .pitch-mark{background:rgba(255,255,255,.12);transform:rotate(45deg)}
+.co-pitch .pitch-body{align-self:end;display:grid;gap:10px;max-width:440px}
+.co-pitch strong{font-size:clamp(22px,2vw,28px);font-weight:500;letter-spacing:-.03em;line-height:1.15}
+.co-pitch .pitch-sub{font-size:14.5px;color:#CFE5DD;line-height:1.5}
+.co-pitch .btn{justify-self:start;position:relative;z-index:1}
+/* Filtered (3 companies): pitch card becomes a regular tile so the row stays full */
+.co-grid[data-f="owned"] .co-pitch,.co-grid[data-f="strategic"] .co-pitch{grid-column:auto;aspect-ratio:1/1.08}
+.co-grid[data-f="owned"] .co-pitch strong,.co-grid[data-f="strategic"] .co-pitch strong{font-size:clamp(20px,1.7vw,24px)}
+.co-grid[data-f="owned"] .co-pitch .pitch-sub,.co-grid[data-f="strategic"] .co-pitch .pitch-sub{display:none}
+.co:not([hidden]){animation:coIn .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes coIn{from{opacity:0;transform:translateY(10px) scale(.98)}}
+@media (max-width:1060px){.co-pitch,.co-grid[data-f] .co-pitch{grid-column:1/-1;aspect-ratio:auto;min-height:220px}.co-grid[data-f] .co-pitch .pitch-sub{display:block}}
+@media (max-width:760px){.co-grid[data-f="owned"] .co-pitch,.co-grid[data-f="strategic"] .co-pitch{grid-column:auto;aspect-ratio:auto}.co-grid[data-f="owned"] .co-pitch .pitch-sub,.co-grid[data-f="strategic"] .co-pitch .pitch-sub{display:none}}
+@media (max-width:460px){.co-pitch,.co-grid[data-f] .co-pitch{grid-column:auto}}
 @media (max-width:1060px){.co-grid{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:760px){.co-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:460px){.co-grid{grid-template-columns:1fr}.co{aspect-ratio:auto}.co .logo-wrap{min-height:180px}}
@@ -341,10 +378,10 @@ footer{background:var(--green);color:#DCEBE5;padding-block:64px 28px}
     <a class="logo" href="#top" aria-label="Entourage, back to top"><img src="assets/entourage-logo-white.webp" alt="Entourage Investment Group"></a>
     <nav id="menu" aria-label="Main">
       <a href="#top">Home</a>
-      <a href="#about">About</a>
-      <a href="#companies">Investments</a>
+      <a href="#companies">Portfolio</a>
       <a href="#record">News</a>
       <a href="#giving">Giving</a>
+      <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="right">
@@ -381,22 +418,19 @@ footer{background:var(--green);color:#DCEBE5;padding-block:64px 28px}
   </div>
 </section>
 
-<!-- MARQUEE -->
-<section class="marquee-sec" aria-label="Companies in the group">
-  <span class="eyebrow">Companies in and around the group</span>
-  <div class="marquee">
-    <div class="track" id="track">
-      <div class="logo-card"><img src="assets/logo-coolinc.png" alt="Cool Incubator"></div>
-      <div class="quote-card"><b>No. 1453</b>House Advantage on the Inc. 5000<span>2019</span></div>
-      <div class="logo-card"><img src="assets/logo-axiom.png" alt="Axiom Cyber Solutions"></div>
-      <div class="logo-card"><img src="assets/logo-tv4.png" alt="TV4 Entertainment"></div>
-      <div class="quote-card"><b>347th</b>Deloitte's Technology Fast 500<span>2019</span></div>
-      <div class="logo-card dark"><img src="assets/logo-smbw.png" alt="Santa Monica Brew Works"></div>
-      <div class="logo-card"><img src="assets/logo-signalzero.png" alt="Signal Zero"></div>
-      <div class="quote-card"><b>Most Innovative</b>TV4 Entertainment, Fast Company<span>2019</span></div>
-      <div class="logo-card"><img src="assets/logo-prod310.png" alt="3.1.0. Productions"></div>
-      <div class="logo-card"><img src="assets/logo-makeawish.png" alt="Make-A-Wish Southern Nevada"></div>
-      <div class="logo-card"><img src="assets/logo-olivecrest.png" alt="Olive Crest"></div>
+<!-- PORTFOLIO LOGOS -->
+<section class="logos-sec" aria-label="Companies in the group">
+  <div class="wrap">
+    <span class="eyebrow">Companies in and around the group</span>
+    <div class="marquee">
+      <ul class="track" id="track">
+        <li class="logo-card"><img src="assets/logo-coolinc.png" alt="Cool Incubator"></li>
+        <li class="logo-card"><img src="assets/logo-axiom.png" alt="Axiom Cyber Solutions"></li>
+        <li class="logo-card"><img src="assets/logo-tv4.png" alt="TV4 Entertainment"></li>
+        <li class="logo-card dark"><img src="assets/logo-smbw.png" alt="Santa Monica Brew Works"></li>
+        <li class="logo-card"><img src="assets/logo-signalzero.png" alt="Signal Zero"></li>
+        <li class="logo-card"><img src="assets/logo-prod310.png" alt="3.1.0. Productions"></li>
+      </ul>
     </div>
   </div>
 </section>
@@ -465,42 +499,51 @@ footer{background:var(--green);color:#DCEBE5;padding-block:64px 28px}
       <h2 class="h2">Four ways we work <span class="g">with a company.</span></h2>
       <p class="sub">Most groups stop at the investment. We keep going, because the team that built House Advantage knows what a company needs in the two years after the money lands.</p>
     </div>
+<figure class="how-banner rv">
+      <img src="assets/incubator.jpg" alt="The Entourage team working through a plan with founders around a table" loading="lazy">
+      <figcaption>
+        <span class="eyebrow">After the money lands</span>
+        <strong>Operators in the room, not just a cheque.</strong>
+        <span class="chips"><span>Invest</span><span>Guide</span><span>Build</span><span>Connect</span></span>
+      </figcaption>
+    </figure>
     <div class="cards4">
       <article class="card rv">
-        <div class="vis"><div class="mock">
-          <div class="row"><span class="lbl">Position</span><span class="pill">Owned</span></div>
-          <div class="big">Acquire</div>
-          <div class="bar"><i style="width:100%"></i></div>
-          <div class="row"><span class="lbl">Strategic equity</span><span class="lbl">Outright</span></div>
-        </div></div>
+        <div class="vis"><svg viewBox="0 0 240 180" class="ill" aria-hidden="true">
+            <line x1="30" y1="150" x2="210" y2="150" class="ax"/>
+            <g class="bars"><rect x="46" y="118" width="22" height="32" rx="2"/><rect x="80" y="100" width="22" height="50" rx="2"/><rect x="114" y="78" width="22" height="72" rx="2"/><rect x="148" y="52" width="22" height="98" rx="2" class="hi"/></g>
+            <path d="M40 124 C80 118 110 96 176 36" class="ln"/><path d="M164 34 L178 34 L178 48" class="ln"/>
+            <g class="coins"><ellipse cx="196" cy="146" rx="14" ry="5"/><ellipse cx="196" cy="138" rx="14" ry="5"/><ellipse cx="196" cy="130" rx="14" ry="5" class="hi"/></g>
+          </svg></div>
         <div class="txt"><span class="num">01 / Invest</span><h3>Invest</h3><p>Outright acquisitions and strategic equity in companies with technology worth owning.</p></div>
       </article>
       <article class="card rv">
-        <div class="vis"><div class="mock">
-          <div class="row"><span class="lbl">Board seat</span><span class="av"><i></i><i></i><i></i></span></div>
-          <div class="chk">Marketing</div>
-          <div class="chk">Technology</div>
-          <div class="chk">Loyalty</div>
-        </div></div>
+        <div class="vis"><svg viewBox="0 0 240 180" class="ill" aria-hidden="true">
+            <path d="M36 140 C70 140 70 96 110 96 S150 52 196 44" class="route"/>
+            <g class="stops"><circle cx="36" cy="140" r="7"/><circle cx="92" cy="106" r="7"/><circle cx="140" cy="76" r="7"/><circle cx="196" cy="44" r="9" class="hi"/></g>
+            <text x="102" y="126" class="lb" text-anchor="start">MARKETING</text><text x="150" y="96" class="lb" text-anchor="start">TECHNOLOGY</text><text x="186" y="16" class="lb" text-anchor="end">LOYALTY</text>
+            <path d="M196 44 L196 18 L214 24 L196 30" class="flag"/>
+          </svg></div>
         <div class="txt"><span class="num">02 / Guide</span><h3>Guide</h3><p>Board seats and hands-on direction across marketing, technology and loyalty.</p></div>
       </article>
       <article class="card rv">
-        <div class="vis"><div class="mock">
-          <div class="row"><span class="lbl">Cool Inc</span><span class="pill">In build</span></div>
-          <div class="row">Product<span class="lbl">Idea to launch</span></div>
-          <div class="bar"><i style="width:72%"></i></div>
-          <div class="row">Design<span class="lbl">UI · UX</span></div>
-          <div class="bar"><i style="width:48%"></i></div>
-        </div></div>
+        <div class="vis"><svg viewBox="0 0 240 180" class="ill" aria-hidden="true">
+            <rect x="34" y="30" width="172" height="120" rx="8" class="win"/>
+            <line x1="34" y1="50" x2="206" y2="50" class="ax"/><circle cx="46" cy="40" r="3" class="dot"/><circle cx="56" cy="40" r="3" class="dot"/><circle cx="66" cy="40" r="3" class="dot"/>
+            <rect x="48" y="62" width="64" height="40" rx="4" class="blk hi"/><rect x="122" y="62" width="70" height="10" rx="3" class="blk"/><rect x="122" y="78" width="52" height="10" rx="3" class="blk"/><rect x="122" y="94" width="60" height="8" rx="3" class="blk"/>
+            <rect x="48" y="112" width="144" height="8" rx="3" class="blk"/><rect x="48" y="126" width="96" height="8" rx="3" class="blk"/>
+            <g class="gear"><circle cx="192" cy="140" r="16"/><circle cx="192" cy="140" r="6"/></g>
+            <text x="150" y="163" class="code">&lt;/&gt;</text>
+          </svg></div>
         <div class="txt"><span class="num">03 / Build</span><h3>Build</h3><p>Cool Inc, our own product, design and engineering team, goes to work on the product.</p></div>
       </article>
       <article class="card rv">
-        <div class="vis"><div class="mock">
-          <div class="row"><span class="lbl">Network</span><span class="pill">25 yrs</span></div>
-          <div class="chk">Gaming</div>
-          <div class="chk">Hospitality</div>
-          <div class="chk">Technology</div>
-        </div></div>
+        <div class="vis"><svg viewBox="0 0 240 180" class="ill" aria-hidden="true">
+            <g class="links"><line x1="120" y1="90" x2="50" y2="44"/><line x1="120" y1="90" x2="190" y2="44"/><line x1="120" y1="90" x2="44" y2="128"/><line x1="120" y1="90" x2="196" y2="128"/><line x1="120" y1="90" x2="120" y2="156"/><line x1="50" y1="44" x2="44" y2="128"/><line x1="190" y1="44" x2="196" y2="128"/></g>
+            <g class="nodes"><circle cx="50" cy="44" r="9"/><circle cx="190" cy="44" r="9"/><circle cx="44" cy="128" r="9"/><circle cx="196" cy="128" r="9"/><circle cx="120" cy="156" r="7"/></g>
+            <circle cx="120" cy="90" r="20" class="hub"/><text x="120" y="95" class="hubt">E</text>
+            <text x="50" y="26" class="lb">GAMING</text><text x="190" y="26" class="lb">HOSPITALITY</text><text x="120" y="176" class="lb">TECHNOLOGY</text>
+          </svg></div>
         <div class="txt"><span class="num">04 / Connect</span><h3>Connect</h3><p>Twenty-five years of gaming, hospitality and technology relationships, opened up.</p></div>
       </article>
     </div>
@@ -523,41 +566,39 @@ footer{background:var(--green);color:#DCEBE5;padding-block:64px 28px}
         <button type="button" data-f="strategic" aria-pressed="false">Strategic</button>
       </div>
     </div>
-    <div class="co-grid">
+    <div class="co-grid" data-f="all">
       <article class="co rv" data-k="owned" tabindex="0">
         <div class="logo-wrap"><img src="assets/logo-coolinc.png" alt="Cool Incubator logo"></div>
-        <div class="meta"><h3>Cool Incubator</h3><small>Wholly owned</small></div>
         <div class="over"><span class="tag">Software and design</span><h3>Cool Incubator</h3><p>The group's build arm. Product development, design and technology consulting.</p><span class="rel">Wholly owned</span></div>
       </article>
       <article class="co rv" data-k="owned" tabindex="0">
         <div class="logo-wrap"><img src="assets/logo-axiom.png" alt="Axiom Cyber Solutions logo"></div>
-        <div class="meta"><h3>Axiom Cyber Solutions</h3><small>Acquired 2019</small></div>
         <div class="over"><span class="tag">Cybersecurity</span><h3>Axiom Cyber Solutions</h3><p>Cybersecurity for small and mid-sized businesses, acquired by the group in 2019.</p><span class="rel">Acquired 2019</span></div>
       </article>
       <article class="co rv" data-k="strategic" tabindex="0">
         <div class="logo-wrap"><img src="assets/logo-tv4.png" alt="TV4 Entertainment logo"></div>
-        <div class="meta"><h3>TV4 Entertainment</h3><small>Board seat</small></div>
         <div class="over"><span class="tag">Media and streaming</span><h3>TV4 Entertainment</h3><p>Streaming channels and original content reaching viewers worldwide.</p><span class="rel">Board seat</span></div>
       </article>
       <article class="co rv" data-k="strategic" tabindex="0">
         <div class="logo-wrap dark"><img src="assets/logo-smbw.png" alt="Santa Monica Brew Works logo"></div>
-        <div class="meta"><h3>Santa Monica Brew Works</h3><small>Strategic</small></div>
         <div class="over"><span class="tag">Craft beverage</span><h3>Santa Monica Brew Works</h3><p>An award-winning craft brewery with a Southern California twist.</p><span class="rel">Strategic</span></div>
       </article>
       <article class="co rv" data-k="strategic" tabindex="0">
         <div class="logo-wrap"><img src="assets/logo-signalzero.png" alt="Signal Zero logo"></div>
-        <div class="meta"><h3>Signal Zero</h3><small>Strategic</small></div>
         <div class="over"><span class="tag">Gaming and rewards</span><h3>Signal Zero</h3><p>A patent-pending rewards platform built for the video gaming market.</p><span class="rel">Strategic</span></div>
       </article>
       <article class="co rv" data-k="owned" tabindex="0">
         <div class="logo-wrap"><img src="assets/logo-prod310.png" alt="3.1.0. Productions logo"></div>
-        <div class="meta"><h3>3.1.0. Productions</h3><small>Wholly owned</small></div>
         <div class="over"><span class="tag">Media and licensing</span><h3>3.1.0. Productions</h3><p>Modern media across film, television, games and music, plus brand licensing.</p><span class="rel">Wholly owned</span></div>
       </article>
-      <a class="co co-pitch rv" href="#founders" style="background:var(--green);border-color:var(--green);color:#fff;justify-content:space-between;padding:22px" data-k="all">
-        <span class="eyebrow" style="color:#9FD3C3">Next company</span>
-        <span style="font-size:24px;letter-spacing:-.03em;line-height:1.2">Building something people use every day?</span>
-        <span class="btn light" style="align-self:flex-start">Pitch us <span class="corner"></span></span>
+      <a class="co co-pitch rv" href="#founders" data-k="all">
+        <span class="eyebrow">Next company</span>
+        <span class="pitch-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 38 L38 10 M18 10 H38 V30"/></svg></span>
+        <span class="pitch-body">
+          <strong>Building something people use every day?</strong>
+          <span class="pitch-sub">Send us a paragraph. You hear back within a week.</span>
+        </span>
+        <span class="btn light">Pitch us <span class="corner"></span></span>
       </a>
     </div>
   </div>
@@ -719,8 +760,8 @@ footer{background:var(--green);color:#DCEBE5;padding-block:64px 28px}
         <p>A technology and lifestyle incubator in Las Vegas.</p>
         <form class="sign" id="news"><input type="email" placeholder="Email for group news" aria-label="Email for group news"><button type="submit">Subscribe</button></form>
       </div>
-      <div class="col"><h4>Group</h4><a href="#companies">Companies</a><a href="#studio">Cool Inc</a><a href="#how">How we work</a><a href="#record">The record</a><a href="#founders">For founders</a></div>
-      <div class="col"><h4>Company</h4><a href="#about">About</a><a href="#giving">Giving</a><a href="#contact">Contact</a></div>
+      <div class="col"><h4>Group</h4><a href="#how">How we work</a><a href="#companies">Companies</a><a href="#studio">Cool Inc</a><a href="#record">The record</a><a href="#founders">For founders</a></div>
+      <div class="col"><h4>Company</h4><a href="#giving">Giving</a><a href="#about">About</a><a href="#contact">Contact</a></div>
       <div class="col"><h4>Connect</h4><a href="#">LinkedIn</a><a href="#">Instagram</a><a href="#">X</a></div>
     </div>
     <div class="legal"><span>© 2026 Entourage Investment Group, LLC</span><span>Las Vegas, Nevada</span></div>
@@ -740,13 +781,24 @@ footer{background:var(--green);color:#DCEBE5;padding-block:64px 28px}
   const links = [...menu.querySelectorAll('a')];
   const spy = () => {
     const y = scrollY + 120;
-    // Links are not in page order, so pick the section that starts closest above the fold line
+    // Pick the section that starts closest above the fold line
     let cur = links[0], best = -1;
     links.forEach(a => { const t = document.querySelector(a.getAttribute('href')); if (t && t.offsetTop <= y && t.offsetTop > best) { best = t.offsetTop; cur = a; } });
     if (innerHeight + scrollY >= document.body.scrollHeight - 4) cur = links[links.length - 1];
     links.forEach(a => a.classList.toggle('current', a === cur));
   };
   spy(); addEventListener('scroll', spy, {passive:true});
+  addEventListener('hashchange', spy); addEventListener('resize', spy);
+  // Lazy images above a linked section load after the initial jump and push it down.
+  // Keep the section anchored while the layout settles, until the visitor scrolls themselves.
+  let anchor = null; try { anchor = location.hash && document.querySelector(location.hash); } catch (e) {}
+  if (anchor) {
+    const land = () => { anchor.scrollIntoView({behavior:'instant'}); spy(); };
+    const ro = new ResizeObserver(land); ro.observe(document.body);
+    const release = () => { ro.disconnect(); ['wheel','touchstart','keydown','pointerdown'].forEach(e => removeEventListener(e, release)); };
+    ['wheel','touchstart','keydown','pointerdown'].forEach(e => addEventListener(e, release, {passive:true}));
+    addEventListener('load', () => { land(); setTimeout(release, 2500); });
+  }
 
   // Hero tile grid with a few tinted squares that drift
   const tiles = document.getElementById('tiles');
@@ -785,6 +837,7 @@ footer{background:var(--green);color:#DCEBE5;padding-block:64px 28px}
     fb.forEach(x => x.setAttribute('aria-pressed', x === b));
     const f = b.dataset.f;
     cos.forEach(c => c.hidden = !(f === 'all' || c.dataset.k === f || c.dataset.k === 'all'));
+    b.closest('.co-top').nextElementSibling.dataset.f = f;
   }));
 
   // Reveal on scroll
