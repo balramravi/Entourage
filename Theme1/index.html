@@ -174,7 +174,7 @@
   .card-top{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
   .chip{border:1px solid var(--line-2);border-radius:99px;padding:5px 11px;color:var(--text)}
   .card-art{position:absolute;right:-10%;top:9%;width:min(62%,34svh);aspect-ratio:1;max-width:100%;pointer-events:none;opacity:.9}
-  .card-name{font-family:var(--display);font-variation-settings:"wdth" 120;font-weight:400;font-size:clamp(2rem,3.2vw,2.9rem);line-height:.95;text-transform:uppercase;margin:0 0 14px;letter-spacing:-.01em;text-wrap:balance}
+  .card-name{font-family:var(--display);font-variation-settings:"wdth" 100;font-weight:400;font-size:clamp(1.45rem,8.2cqi,2.3rem);line-height:1;text-transform:uppercase;margin:0 0 14px;letter-spacing:-.01em;text-wrap:balance}
   .card-desc{color:var(--muted);font-size:15px;margin:0;max-width:34ch}
   .card-foot{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
   .badge{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);line-height:1.6}
@@ -262,9 +262,11 @@
   .face-t{font-family:var(--display);font-variation-settings:"wdth" 130;font-weight:300;font-size:clamp(1.6rem,2.4vw,2.2rem);text-transform:uppercase;line-height:1;margin-top:8px}
   @media (max-width:760px){.faces{grid-template-columns:1fr}.face{aspect-ratio:16/10}}
 
-  .card-logo{position:relative;flex:1;margin:22px 0;min-height:120px;border-radius:4px;background:#F1EEE6;display:grid;place-items:center;padding:12%}
+  .card{container-type:inline-size}
+  .card-logo{position:relative;flex:1 1 0;margin:22px 0;min-height:150px;max-height:260px;border-radius:4px;background:#F1EEE6;overflow:hidden}
   .card-logo.dark{background:#141A2A;border:1px solid var(--line)}
-  .card-logo img{max-width:100%;max-height:150px;width:auto;height:auto;object-fit:contain;transition:transform .8s var(--ease)}
+  .card-logo img{position:absolute;left:18%;top:16%;width:64%;height:68%;object-fit:contain;transition:transform .8s var(--ease)}
+  @media (max-width:860px){.card-logo{flex:none;aspect-ratio:16/9;min-height:0;max-height:none}}
   .card:hover .card-logo img{transform:scale(1.05)}
 
   .studio{padding-block:16vh}
@@ -1135,6 +1137,7 @@
 .ent-home:focus-visible{outline:2px solid #e8c27e;outline-offset:3px}
 .ent-home .ent-home-ar{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#f4f2ee;color:#0e0e10;font-size:13px}
 .ent-home .ent-home-n{opacity:.55;font-size:12px}
+@media (max-width:600px){body>footer,body footer:last-of-type{padding-bottom:max(76px,env(safe-area-inset-bottom))!important}.ent-home{padding:0;width:44px;height:44px;justify-content:center;gap:0;font-size:0}.ent-home .ent-home-ar{width:26px;height:26px;font-size:14px}.ent-home .ent-home-n{display:none}}
 @media print{.ent-home{display:none}}
 </style>
 <a class="ent-home" href="../" aria-label="Back to all themes"><span class="ent-home-ar" aria-hidden="true">←</span>All themes<span class="ent-home-n" aria-hidden="true">· 1/5</span></a>

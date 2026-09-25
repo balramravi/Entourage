@@ -298,7 +298,7 @@ footer ul a:hover{opacity:.7}
 .sign input::placeholder{color:var(--b-soft)}
 .sign button{border:0;background:transparent;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;color:var(--b-ink)}
 .colophon{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:16px 8px;border-top:1px solid var(--b-line);font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--b-soft)}
-@media (max-width:820px){footer .wrap{grid-template-columns:1fr 1fr}}
+@media (max-width:820px){footer .wrap{grid-template-columns:1fr 1fr}footer .wrap>div:first-child{grid-column:1/-1}}
 </style>
 
 
@@ -346,7 +346,7 @@ footer ul a:hover{opacity:.7}
         <div class="slide" id="slide2" role="group" aria-roledescription="slide" aria-label="2 of 3, The build team" aria-hidden="true" inert>
           <div>
             <span class="eyebrow">The build team · Cool Incubator</span>
-            <h1 class="statement">We don't just fund it. We <em>build</em> it.</h1>
+            <h2 class="statement">We don't just fund it. We <em>build</em> it.</h2>
             <p class="lede">Cool Inc is our own product, design and engineering team. When a company we back needs an app, a platform or a rebuild, the people who do it are already on the payroll. It is the same discipline that built HALo.</p>
             <div class="hero-cta">
               <a class="btn solid" href="#studio">Meet Cool Inc</a>
@@ -359,7 +359,7 @@ footer ul a:hover{opacity:.7}
         <div class="slide" id="slide3" role="group" aria-roledescription="slide" aria-label="3 of 3, The giving" aria-hidden="true" inert>
           <div>
             <span class="eyebrow">The giving · Make-A-Wish &amp; Olive Crest</span>
-            <h1 class="statement">Fifteen years of <em>wishes granted.</em></h1>
+            <h2 class="statement">Fifteen years of <em>wishes granted.</em></h2>
             <p class="lede">Entourage backs non-profits that deliver real services to children and families in need. The drives run every year, and the involvement goes past writing a cheque.</p>
             <div class="hero-cta">
               <a class="btn solid" href="#giving">The causes we back</a>
@@ -620,7 +620,7 @@ footer ul a:hover{opacity:.7}
           <span>info@entouragegrp.com</span>
         </div>
       </div>
-      <form id="pitch">
+      <form id="pitchForm">
         <label for="nm">Name<input id="nm" name="nm" autocomplete="name" required></label>
         <label for="em">Email<input id="em" name="em" type="email" autocomplete="email" required></label>
         <label class="full" for="co">Company or product<input id="co" name="co"></label>
@@ -725,7 +725,7 @@ footer ul a:hover{opacity:.7}
   window.addEventListener('resize',edges);
   edges();
 
-  document.getElementById('pitch').addEventListener('submit',function(e){
+  document.getElementById('pitchForm').addEventListener('submit',function(e){
     e.preventDefault();
     document.getElementById('sent').hidden=false;
   });
@@ -769,6 +769,7 @@ footer ul a:hover{opacity:.7}
 .ent-home:focus-visible{outline:2px solid #e8c27e;outline-offset:3px}
 .ent-home .ent-home-ar{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#f4f2ee;color:#0e0e10;font-size:13px}
 .ent-home .ent-home-n{opacity:.55;font-size:12px}
+@media (max-width:600px){body>footer,body footer:last-of-type{padding-bottom:max(76px,env(safe-area-inset-bottom))!important}.ent-home{padding:0;width:44px;height:44px;justify-content:center;gap:0;font-size:0}.ent-home .ent-home-ar{width:26px;height:26px;font-size:14px}.ent-home .ent-home-n{display:none}}
 @media print{.ent-home{display:none}}
 </style>
 <a class="ent-home" href="../" aria-label="Back to all themes"><span class="ent-home-ar" aria-hidden="true">←</span>All themes<span class="ent-home-n" aria-hidden="true">· 2/5</span></a>
