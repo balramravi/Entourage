@@ -13,7 +13,7 @@
   color-scheme:light;
   --ink:#1F1D1B;
   --ink-2:#4A4E52;
-  --mute:#7A7F84;
+  --mute:#666B70;
   --line:#E4E7E5;
   --line-2:#EEF1EF;
   --bg:#FFFFFF;
@@ -141,7 +141,7 @@ h1,h2,h3,h4,p,figure,blockquote{margin:0}
 .stat .ic{position:absolute;right:24px;top:40px;width:22px;height:22px;opacity:.55}
 .stat b{font-size:clamp(34px,3.4vw,48px);font-weight:400;letter-spacing:-.04em;line-height:1}
 .stat p{font-size:14px;color:#DCEBE5;max-width:24ch}
-.stat span{font-size:12px;color:#9FC9BC;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.14)}
+.stat span{font-size:12px;color:#B5D8CD;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.14)}
 @media (max-width:900px){.impact .wrap{grid-template-columns:1fr 1fr}.stat{padding:32px 20px}.stat:nth-child(odd){border-left:0;padding-left:0}.stat:nth-child(n+3){border-top:1px solid rgba(255,255,255,.14)}}
 
 /* PORTFOLIO LOGOS (marquee, contained to .wrap) */
@@ -780,7 +780,7 @@ footer{background:var(--green);color:#DCEBE5;padding-block:64px 28px}
   // Header: underline the link for the section in view
   const links = [...menu.querySelectorAll('a')];
   const spy = () => {
-    const y = scrollY + 120;
+    const y = scrollY + Math.max(140, innerHeight * .35);
     // Pick the section that starts closest above the fold line
     let cur = links[0], best = -1;
     links.forEach(a => { const t = document.querySelector(a.getAttribute('href')); if (t && t.offsetTop <= y && t.offsetTop > best) { best = t.offsetTop; cur = a; } });
@@ -856,7 +856,8 @@ footer{background:var(--green);color:#DCEBE5;padding-block:64px 28px}
 .ent-home:focus-visible{outline:2px solid #e8c27e;outline-offset:3px}
 .ent-home .ent-home-ar{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#f4f2ee;color:#0e0e10;font-size:13px}
 .ent-home .ent-home-n{opacity:.55;font-size:12px}
-@media (max-width:600px){body>footer,body footer:last-of-type{padding-bottom:max(76px,env(safe-area-inset-bottom))!important}.ent-home{padding:0;width:44px;height:44px;justify-content:center;gap:0;font-size:0}.ent-home .ent-home-ar{width:26px;height:26px;font-size:14px}.ent-home .ent-home-n{display:none}}
+body footer:last-of-type{padding-bottom:max(76px,env(safe-area-inset-bottom))!important}
+@media (max-width:600px){.ent-home{padding:0;width:44px;height:44px;justify-content:center;gap:0;font-size:0}.ent-home .ent-home-ar{width:26px;height:26px;font-size:14px}.ent-home .ent-home-n{display:none}}
 @media print{.ent-home{display:none}}
 </style>
 <a class="ent-home" href="../" aria-label="Back to all themes"><span class="ent-home-ar" aria-hidden="true">←</span>All themes<span class="ent-home-n" aria-hidden="true">· 3/5</span></a>

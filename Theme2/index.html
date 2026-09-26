@@ -738,7 +738,7 @@ footer ul a:hover{opacity:.7}
 (() => {
   const links = [...document.querySelectorAll('#nav a')].filter(a => (a.getAttribute('href') || '').length > 1);
   const spy = () => {
-    const y = scrollY + 140;
+    const y = scrollY + Math.max(140, innerHeight * .35);
     let cur = null, best = -1;
     links.forEach(a => {
       let t = null; try { t = document.querySelector(a.getAttribute('href')); } catch (e) {}
@@ -769,7 +769,8 @@ footer ul a:hover{opacity:.7}
 .ent-home:focus-visible{outline:2px solid #e8c27e;outline-offset:3px}
 .ent-home .ent-home-ar{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#f4f2ee;color:#0e0e10;font-size:13px}
 .ent-home .ent-home-n{opacity:.55;font-size:12px}
-@media (max-width:600px){body>footer,body footer:last-of-type{padding-bottom:max(76px,env(safe-area-inset-bottom))!important}.ent-home{padding:0;width:44px;height:44px;justify-content:center;gap:0;font-size:0}.ent-home .ent-home-ar{width:26px;height:26px;font-size:14px}.ent-home .ent-home-n{display:none}}
+body footer:last-of-type{padding-bottom:max(76px,env(safe-area-inset-bottom))!important}
+@media (max-width:600px){.ent-home{padding:0;width:44px;height:44px;justify-content:center;gap:0;font-size:0}.ent-home .ent-home-ar{width:26px;height:26px;font-size:14px}.ent-home .ent-home-n{display:none}}
 @media print{.ent-home{display:none}}
 </style>
 <a class="ent-home" href="../" aria-label="Back to all themes"><span class="ent-home-ar" aria-hidden="true">←</span>All themes<span class="ent-home-n" aria-hidden="true">· 2/5</span></a>
